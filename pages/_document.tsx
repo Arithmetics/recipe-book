@@ -1,10 +1,9 @@
-/* eslint-disable @next/next/no-title-in-document-head */
-import Document, { Head, Html, Main, NextScript } from "next/document";
-import { ColorModeScript } from "@chakra-ui/react";
-import theme from "../theme";
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import { ColorModeScript } from '@chakra-ui/react';
+import theme from '../theme';
 
 export default class MyDocument extends Document {
-  render() {
+  render(): JSX.Element {
     return (
       <Html>
         <Head>
