@@ -1,0 +1,26 @@
+overwrite: true
+schema: 'backend/schema.graphql'
+documents: '{components,pages}/**/*.{ts,tsx}'
+generates:
+  generated/graphql-types.ts:
+    config:
+      dedupeOperationSuffix: true
+      withHooks: true
+      withComponent: false
+      withHOC: false
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+  # keystone
+  backend/codegen/graphql-types.ts:
+    config:
+      dedupeOperationSuffix: true
+      withHooks: false
+      withComponent: false
+      withHOC: false
+    plugins:
+      - 'typescript'
+  ./graphql.schema.json:
+    plugins:
+      - 'introspection'

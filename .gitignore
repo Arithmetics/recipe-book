@@ -1,4 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+/.vscode/
 
 # dependencies
 /node_modules
@@ -36,3 +37,8 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+#me
+*.env
+*/backend/.keystone/*
+*/backend/node_modules

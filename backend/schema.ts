@@ -1,22 +1,16 @@
-import { list } from "@keystone-6/core";
+import { list } from '@keystone-6/core';
 
-import {
-  text,
-  relationship,
-  password,
-  timestamp,
-  select,
-} from "@keystone-6/core/fields";
-import { cloudinaryImage } from "@keystone-6/cloudinary";
-import { document } from "@keystone-6/fields-document";
-import { Lists } from ".keystone/types";
-import "dotenv/config";
+import { text, relationship, password, select } from '@keystone-6/core/fields';
+import { cloudinaryImage } from '@keystone-6/cloudinary';
+import { document } from '@keystone-6/fields-document';
+import { Lists } from '.keystone/types';
+import 'dotenv/config';
 
 export const cloudinary = {
-  cloudName: process.env.CLOUDINARY_CLOUD_NAME || "",
-  apiKey: process.env.CLOUDINARY_KEY || "",
-  apiSecret: process.env.CLOUDINARY_SECRET || "",
-  folder: "recipes",
+  cloudName: process.env.CLOUDINARY_CLOUD_NAME || '',
+  apiKey: process.env.CLOUDINARY_KEY || '',
+  apiSecret: process.env.CLOUDINARY_SECRET || '',
+  folder: 'recipes',
 };
 
 export const lists: Lists = {
@@ -25,14 +19,14 @@ export const lists: Lists = {
       name: text({ validation: { isRequired: true } }),
       email: text({
         validation: { isRequired: true },
-        isIndexed: "unique",
+        isIndexed: 'unique',
         isFilterable: true,
       }),
       password: password({ validation: { isRequired: true } }),
     },
     ui: {
       listView: {
-        initialColumns: ["name", "email"],
+        initialColumns: ['name', 'email'],
       },
     },
   }),
@@ -41,26 +35,26 @@ export const lists: Lists = {
       name: text({ validation: { isRequired: true } }),
       note: text(),
       status: select({
-        type: "enum",
+        type: 'enum',
         options: [
-          { label: "Good", value: "GOOD" },
-          { label: "Low", value: "LOW" },
-          { label: "Out", value: "OUT" },
+          { label: 'Good', value: 'GOOD' },
+          { label: 'Low', value: 'LOW' },
+          { label: 'Out', value: 'OUT' },
         ],
         validation: {
           isRequired: true,
         },
-        ui: { displayMode: "select" },
+        ui: { displayMode: 'select' },
       }),
-      category: relationship({ ref: "Category" }),
-      recipes: relationship({ ref: "Recipe.ingredients", many: true }),
+      category: relationship({ ref: 'Category' }),
+      recipes: relationship({ ref: 'Recipe.ingredients', many: true }),
       image: relationship({
-        ref: "CloudImage",
+        ref: 'CloudImage',
         ui: {
-          displayMode: "cards",
-          cardFields: ["image", "altText"],
-          inlineCreate: { fields: ["image", "altText"] },
-          inlineEdit: { fields: ["image", "altText"] },
+          displayMode: 'cards',
+          cardFields: ['image', 'altText'],
+          inlineCreate: { fields: ['image', 'altText'] },
+          inlineEdit: { fields: ['image', 'altText'] },
         },
       }),
     },
@@ -69,12 +63,12 @@ export const lists: Lists = {
     fields: {
       name: text({ validation: { isRequired: true } }),
       image: relationship({
-        ref: "CloudImage",
+        ref: 'CloudImage',
         ui: {
-          displayMode: "cards",
-          cardFields: ["image", "altText"],
-          inlineCreate: { fields: ["image", "altText"] },
-          inlineEdit: { fields: ["image", "altText"] },
+          displayMode: 'cards',
+          cardFields: ['image', 'altText'],
+          inlineCreate: { fields: ['image', 'altText'] },
+          inlineEdit: { fields: ['image', 'altText'] },
         },
       }),
     },
@@ -83,14 +77,14 @@ export const lists: Lists = {
     fields: {
       name: text({ validation: { isRequired: true } }),
       originalLink: text(),
-      ingredients: relationship({ ref: "Ingredient.recipes", many: true }),
+      ingredients: relationship({ ref: 'Ingredient.recipes', many: true }),
       image: relationship({
-        ref: "CloudImage",
+        ref: 'CloudImage',
         ui: {
-          displayMode: "cards",
-          cardFields: ["image", "altText"],
-          inlineCreate: { fields: ["image", "altText"] },
-          inlineEdit: { fields: ["image", "altText"] },
+          displayMode: 'cards',
+          cardFields: ['image', 'altText'],
+          inlineCreate: { fields: ['image', 'altText'] },
+          inlineEdit: { fields: ['image', 'altText'] },
         },
       }),
       instructions: document({
@@ -104,13 +98,13 @@ export const lists: Lists = {
     fields: {
       image: cloudinaryImage({
         cloudinary,
-        label: "Source",
+        label: 'Source',
       }),
       altText: text({ validation: { isRequired: false } }),
     },
     ui: {
       listView: {
-        initialColumns: ["image", "altText"],
+        initialColumns: ['image', 'altText'],
       },
     },
   }),
