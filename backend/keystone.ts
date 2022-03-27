@@ -14,10 +14,22 @@ import { lists } from './schema';
 // Keystone auth is configured separately - check out the basic auth setup we are importing from our auth file.
 import { withAuth, session } from './auth';
 
+const frontendUrl = process.env.FRONTEND_URL;
+
+if (!frontendUrl) {
+  throw new Error(`Where's your FRONTEND_URL dude`);
+}
+
 export default withAuth(
   // Using the config function helps typescript guide you to the available options.
   config({
     // the db sets the database provider - we're using sqlite for the fastest startup experience
+    server: {
+      cors: {
+        origin: [frontendUrl],
+        credentials: true,
+      },
+    },
     db: {
       provider: 'postgresql',
       url: `${process.env.DATABASE_URL}?pool_timeout=0`,
