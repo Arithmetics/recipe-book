@@ -68,7 +68,6 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
       overflow={'hidden'}
       position={'relative'}
       padding={2}
-      margin={4}
       transition="all 0.5s"
       cursor="pointer"
       _hover={{
@@ -83,7 +82,7 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
         objectFit={'cover'}
         objectPosition={'top'}
       />
-      <Progress colorScheme={colorScheme} size="sm" value={value} />
+      <Progress isAnimated colorScheme={colorScheme} size="sm" value={value} />
     </Stack>
   );
 }

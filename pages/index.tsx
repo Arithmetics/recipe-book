@@ -1,5 +1,7 @@
-import Browser from '../components/Browser';
+// import AllIngredients from '../components/AllIngredients';
+import AllRecipes from '../components/AllRecipes';
 
 export default function HomePage(): JSX.Element {
-  return <Browser />;
+  // return <AllIngredients />;
+  return <AllRecipes />;
 }

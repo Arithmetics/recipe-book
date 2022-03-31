@@ -1,16 +1,5 @@
 import gql from 'graphql-tag';
 
-export const GET_RECIPE_QUERY = gql`
-  query GetRecipe($id: ID!) {
-    recipe(where: { id: $id }) {
-      id
-      instructions {
-        document
-      }
-    }
-  }
-`;
-
 export const GET_ALL_CATEGORIES = gql`
   query GetAllCategories {
     categories {
@@ -50,6 +39,60 @@ export const UPDATE_INGREDIENT_STATUS = gql`
       category {
         id
         name
+      }
+      image {
+        id
+        image {
+          publicUrlTransformed
+        }
+        altText
+      }
+    }
+  }
+`;
+
+export const GET_ALL_RECIPES = gql`
+  query GetAllRecipes {
+    recipes {
+      id
+      name
+      originalLink
+      ingredientsCount
+      image {
+        id
+        image {
+          publicUrlTransformed
+        }
+        altText
+      }
+    }
+  }
+`;
+
+export const GET_RECIPE = gql`
+  query GetRecipe($id: ID!) {
+    recipe(where: { id: $id }) {
+      id
+      name
+      originalLink
+      instructions {
+        document
+      }
+      ingredients {
+        id
+        name
+        status
+        category {
+          id
+          name
+        }
+        image {
+          id
+          image {
+            publicUrlTransformed
+          }
+          altText
+        }
       }
       image {
         id
