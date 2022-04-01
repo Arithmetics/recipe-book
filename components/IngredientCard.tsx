@@ -1,4 +1,4 @@
-import { Image, Progress, Stack, Text } from '@chakra-ui/react';
+import { Checkbox, Image, Progress, Stack, Text } from '@chakra-ui/react';
 import {
   Ingredient,
   IngredientStatusType,
@@ -40,6 +40,10 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
 
   const { value, colorScheme } = progress(ingredient.status);
 
+  const toggleKeyIngredient = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    e.stopPropagation();
+  };
+
   const handleClick = (): void => {
     try {
       if (ingredient.status === IngredientStatusType.Out) {
@@ -60,7 +64,6 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
 
   return (
     <Stack
-      onClick={handleClick}
       width={'150px'}
       bg={'gray.600'}
       boxShadow={'2xl'}
@@ -69,7 +72,6 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
       position={'relative'}
       padding={2}
       transition="all 0.5s"
-      cursor="pointer"
       _hover={{
         transform: 'scale(1.05)',
       }}
@@ -81,8 +83,13 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
         src={ingredient.image?.image?.publicUrlTransformed || ''}
         objectFit={'cover'}
         objectPosition={'top'}
+        cursor="pointer"
+        onClick={handleClick}
       />
       <Progress isAnimated colorScheme={colorScheme} size="sm" value={value} />
+      <Checkbox size="lg" colorScheme="yellow" onChange={toggleKeyIngredient}>
+        Key?
+      </Checkbox>
     </Stack>
   );
 }

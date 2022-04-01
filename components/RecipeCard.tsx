@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { Image, Stack, Stat, StatLabel, StatNumber, Text } from '@chakra-ui/react';
 import { Recipe } from '../generated/graphql-types';
 
@@ -6,7 +7,12 @@ type RecipeCardProps = {
 };
 
 export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
-  const handleClick = (): void => {};
+  const router = useRouter();
+
+  const handleClick = (): void => {
+    console.log('xxx');
+    router.push(`/recipes/${recipe.id}`);
+  };
 
   return (
     <Stack

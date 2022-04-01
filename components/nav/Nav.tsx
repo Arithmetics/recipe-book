@@ -10,6 +10,9 @@ import {
   CloseButton,
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import { MdOutlineIntegrationInstructions, MdOutlineFoodBank } from 'react-icons/md';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
+import ButtonLink from '../ButtonLink';
 
 export default function Nav(): JSX.Element {
   const mobileNav = useDisclosure();
@@ -53,9 +56,49 @@ export default function Nav(): JSX.Element {
                   justifySelf="self-start"
                   onClick={mobileNav.onClose}
                 />
+                <ButtonLink
+                  title="Recipes"
+                  leftIcon={<MdOutlineIntegrationInstructions />}
+                  href={`/recipes`}
+                  buttonTheme={{ variant: 'ghost' }}
+                  layoutProps={{ w: 'full' }}
+                />
+                <ButtonLink
+                  title="Ingredients"
+                  leftIcon={<MdOutlineFoodBank />}
+                  href={`/ingredients`}
+                  buttonTheme={{ variant: 'ghost' }}
+                  layoutProps={{ w: 'full' }}
+                />
+                <ButtonLink
+                  title="Shopping"
+                  leftIcon={<AiOutlineShoppingCart />}
+                  href={`/shopping`}
+                  buttonTheme={{ variant: 'ghost' }}
+                  layoutProps={{ w: 'full' }}
+                />
               </VStack>
             </Box>
-
+            <HStack spacing={3} display={{ base: 'none', md: 'inline-flex' }}>
+              <ButtonLink
+                title="Recipes"
+                leftIcon={<MdOutlineIntegrationInstructions />}
+                href={'/recipes'}
+                buttonTheme={{ variant: 'ghost' }}
+              />
+              <ButtonLink
+                title="Ingredients"
+                leftIcon={<MdOutlineFoodBank />}
+                href={'/ingredients'}
+                buttonTheme={{ variant: 'ghost' }}
+              />
+              <ButtonLink
+                title="Shopping"
+                leftIcon={<AiOutlineShoppingCart />}
+                href={'/shopping'}
+                buttonTheme={{ variant: 'ghost' }}
+              />
+            </HStack>
             <HStack spacing={3} display={{ base: 'none', md: 'inline-flex' }}></HStack>
           </HStack>
           <HStack
