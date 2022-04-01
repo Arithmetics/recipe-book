@@ -10,7 +10,6 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
   const router = useRouter();
 
   const handleClick = (): void => {
-    console.log('xxx');
     router.push(`/recipes/${recipe.id}`);
   };
 

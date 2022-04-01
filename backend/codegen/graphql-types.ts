@@ -18,6 +18,11 @@ export type Scalars = {
 
 export type AuthenticatedItem = User;
 
+export type BooleanFilter = {
+  equals?: InputMaybe<Scalars['Boolean']>;
+  not?: InputMaybe<BooleanFilter>;
+};
+
 export type Category = {
   __typename?: 'Category';
   id: Scalars['ID'];
@@ -194,8 +199,10 @@ export type Ingredient = {
   category?: Maybe<Category>;
   id: Scalars['ID'];
   image?: Maybe<CloudImage>;
+  key?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
+  onShoppingList?: Maybe<Scalars['Boolean']>;
   recipes?: Maybe<Array<Recipe>>;
   recipesCount?: Maybe<Scalars['Int']>;
   status?: Maybe<IngredientStatusType>;
@@ -217,8 +224,10 @@ export type IngredientRecipesCountArgs = {
 export type IngredientCreateInput = {
   category?: InputMaybe<CategoryRelateToOneForCreateInput>;
   image?: InputMaybe<CloudImageRelateToOneForCreateInput>;
+  key?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
+  onShoppingList?: InputMaybe<Scalars['Boolean']>;
   recipes?: InputMaybe<RecipeRelateToManyForCreateInput>;
   status?: InputMaybe<IngredientStatusType>;
 };
@@ -231,8 +240,10 @@ export type IngredientManyRelationFilter = {
 
 export type IngredientOrderByInput = {
   id?: InputMaybe<OrderDirection>;
+  key?: InputMaybe<OrderDirection>;
   name?: InputMaybe<OrderDirection>;
   note?: InputMaybe<OrderDirection>;
+  onShoppingList?: InputMaybe<OrderDirection>;
   status?: InputMaybe<OrderDirection>;
 };
 
@@ -269,8 +280,10 @@ export type IngredientUpdateArgs = {
 export type IngredientUpdateInput = {
   category?: InputMaybe<CategoryRelateToOneForUpdateInput>;
   image?: InputMaybe<CloudImageRelateToOneForUpdateInput>;
+  key?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
+  onShoppingList?: InputMaybe<Scalars['Boolean']>;
   recipes?: InputMaybe<RecipeRelateToManyForUpdateInput>;
   status?: InputMaybe<IngredientStatusType>;
 };
@@ -282,8 +295,10 @@ export type IngredientWhereInput = {
   category?: InputMaybe<CategoryWhereInput>;
   id?: InputMaybe<IdFilter>;
   image?: InputMaybe<CloudImageWhereInput>;
+  key?: InputMaybe<BooleanFilter>;
   name?: InputMaybe<StringFilter>;
   note?: InputMaybe<StringFilter>;
+  onShoppingList?: InputMaybe<BooleanFilter>;
   recipes?: InputMaybe<RecipeManyRelationFilter>;
   status?: InputMaybe<IngredientStatusTypeNullableFilter>;
 };

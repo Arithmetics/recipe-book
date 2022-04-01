@@ -1,13 +1,4 @@
-import {
-  Box,
-  Flex,
-  Center,
-  Spinner,
-  Text,
-  // Select,
-  //  Button,
-} from '@chakra-ui/react';
-// import { useState } from 'react';
+import { Box, Flex, Center, Spinner, Text } from '@chakra-ui/react';
 import { useGetAllCategoriesQuery, useGetAllRecipesQuery } from '../generated/graphql-types';
 import RecipeCard from './RecipeCard';
 

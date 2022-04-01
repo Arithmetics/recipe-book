@@ -2,6 +2,7 @@ import { Checkbox, Image, Progress, Stack, Text } from '@chakra-ui/react';
 import {
   Ingredient,
   IngredientStatusType,
+  useToggleIngredientInListMutation,
   useUpdateIngredientStatusMutation,
 } from '../generated/graphql-types';
 
@@ -38,10 +39,18 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
   const [updateIngredient, { loading: updateIngredientLoading }] =
     useUpdateIngredientStatusMutation();
 
+  const [toggleIngredientInListMutation, { loading: toggleIngredientListLoading }] =
+    useToggleIngredientInListMutation();
+
   const { value, colorScheme } = progress(ingredient.status);
 
-  const toggleKeyIngredient = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    e.stopPropagation();
+  const toggleIngredientOnShoppingList = (): void => {
+    toggleIngredientInListMutation({
+      variables: {
+        id: ingredient.id,
+        onList: !ingredient.onShoppingList,
+      },
+    });
   };
 
   const handleClick = (): void => {
@@ -60,7 +69,7 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
     }
   };
 
-  console.log(updateIngredientLoading);
+  console.log(updateIngredientLoading, toggleIngredientListLoading);
 
   return (
     <Stack
@@ -87,9 +96,16 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
         onClick={handleClick}
       />
       <Progress isAnimated colorScheme={colorScheme} size="sm" value={value} />
-      <Checkbox size="lg" colorScheme="yellow" onChange={toggleKeyIngredient}>
-        Key?
-      </Checkbox>
+      {!ingredient.key && (
+        <Checkbox
+          size="lg"
+          colorScheme="yellow"
+          isChecked={ingredient.onShoppingList || false}
+          onChange={toggleIngredientOnShoppingList}
+        >
+          On list
+        </Checkbox>
+      )}
     </Stack>
   );
 }

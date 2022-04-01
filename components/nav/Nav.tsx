@@ -73,7 +73,7 @@ export default function Nav(): JSX.Element {
                 <ButtonLink
                   title="Shopping"
                   leftIcon={<AiOutlineShoppingCart />}
-                  href={`/shopping`}
+                  href={`/shoppingList`}
                   buttonTheme={{ variant: 'ghost' }}
                   layoutProps={{ w: 'full' }}
                 />
@@ -95,7 +95,7 @@ export default function Nav(): JSX.Element {
               <ButtonLink
                 title="Shopping"
                 leftIcon={<AiOutlineShoppingCart />}
-                href={'/shopping'}
+                href={'/shoppingList'}
                 buttonTheme={{ variant: 'ghost' }}
               />
             </HStack>

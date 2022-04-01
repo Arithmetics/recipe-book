@@ -21,6 +21,11 @@ export type Scalars = {
 
 export type AuthenticatedItem = User;
 
+export type BooleanFilter = {
+  equals?: InputMaybe<Scalars['Boolean']>;
+  not?: InputMaybe<BooleanFilter>;
+};
+
 export type Category = {
   __typename?: 'Category';
   id: Scalars['ID'];
@@ -197,8 +202,10 @@ export type Ingredient = {
   category?: Maybe<Category>;
   id: Scalars['ID'];
   image?: Maybe<CloudImage>;
+  key?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
+  onShoppingList?: Maybe<Scalars['Boolean']>;
   recipes?: Maybe<Array<Recipe>>;
   recipesCount?: Maybe<Scalars['Int']>;
   status?: Maybe<IngredientStatusType>;
@@ -220,8 +227,10 @@ export type IngredientRecipesCountArgs = {
 export type IngredientCreateInput = {
   category?: InputMaybe<CategoryRelateToOneForCreateInput>;
   image?: InputMaybe<CloudImageRelateToOneForCreateInput>;
+  key?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
+  onShoppingList?: InputMaybe<Scalars['Boolean']>;
   recipes?: InputMaybe<RecipeRelateToManyForCreateInput>;
   status?: InputMaybe<IngredientStatusType>;
 };
@@ -234,8 +243,10 @@ export type IngredientManyRelationFilter = {
 
 export type IngredientOrderByInput = {
   id?: InputMaybe<OrderDirection>;
+  key?: InputMaybe<OrderDirection>;
   name?: InputMaybe<OrderDirection>;
   note?: InputMaybe<OrderDirection>;
+  onShoppingList?: InputMaybe<OrderDirection>;
   status?: InputMaybe<OrderDirection>;
 };
 
@@ -272,8 +283,10 @@ export type IngredientUpdateArgs = {
 export type IngredientUpdateInput = {
   category?: InputMaybe<CategoryRelateToOneForUpdateInput>;
   image?: InputMaybe<CloudImageRelateToOneForUpdateInput>;
+  key?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
+  onShoppingList?: InputMaybe<Scalars['Boolean']>;
   recipes?: InputMaybe<RecipeRelateToManyForUpdateInput>;
   status?: InputMaybe<IngredientStatusType>;
 };
@@ -285,8 +298,10 @@ export type IngredientWhereInput = {
   category?: InputMaybe<CategoryWhereInput>;
   id?: InputMaybe<IdFilter>;
   image?: InputMaybe<CloudImageWhereInput>;
+  key?: InputMaybe<BooleanFilter>;
   name?: InputMaybe<StringFilter>;
   note?: InputMaybe<StringFilter>;
+  onShoppingList?: InputMaybe<BooleanFilter>;
   recipes?: InputMaybe<RecipeManyRelationFilter>;
   status?: InputMaybe<IngredientStatusTypeNullableFilter>;
 };
@@ -926,7 +941,7 @@ export type GetAllCategoriesQuery = { __typename?: 'Query', categories?: Array<{
 export type GetAllIngredientsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllIngredientsQuery = { __typename?: 'Query', ingredients?: Array<{ __typename?: 'Ingredient', id: string, name?: string | null, status?: IngredientStatusType | null, category?: { __typename?: 'Category', id: string, name?: string | null } | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null }> | null };
+export type GetAllIngredientsQuery = { __typename?: 'Query', ingredients?: Array<{ __typename?: 'Ingredient', id: string, name?: string | null, status?: IngredientStatusType | null, key?: boolean | null, onShoppingList?: boolean | null, category?: { __typename?: 'Category', id: string, name?: string | null } | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null }> | null };
 
 export type UpdateIngredientStatusMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -934,7 +949,15 @@ export type UpdateIngredientStatusMutationVariables = Exact<{
 }>;
 
 
-export type UpdateIngredientStatusMutation = { __typename?: 'Mutation', updateIngredient?: { __typename?: 'Ingredient', id: string, name?: string | null, status?: IngredientStatusType | null, category?: { __typename?: 'Category', id: string, name?: string | null } | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null } | null };
+export type UpdateIngredientStatusMutation = { __typename?: 'Mutation', updateIngredient?: { __typename?: 'Ingredient', id: string, name?: string | null, status?: IngredientStatusType | null, key?: boolean | null, onShoppingList?: boolean | null, category?: { __typename?: 'Category', id: string, name?: string | null } | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null } | null };
+
+export type ToggleIngredientInListMutationVariables = Exact<{
+  id: Scalars['ID'];
+  onList: Scalars['Boolean'];
+}>;
+
+
+export type ToggleIngredientInListMutation = { __typename?: 'Mutation', updateIngredient?: { __typename?: 'Ingredient', id: string, name?: string | null, status?: IngredientStatusType | null, key?: boolean | null, onShoppingList?: boolean | null, category?: { __typename?: 'Category', id: string, name?: string | null } | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null } | null };
 
 export type GetAllRecipesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -946,7 +969,12 @@ export type GetRecipeQueryVariables = Exact<{
 }>;
 
 
-export type GetRecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, name?: string | null, originalLink?: string | null, instructions?: { __typename?: 'Recipe_instructions_Document', document: any } | null, ingredients?: Array<{ __typename?: 'Ingredient', id: string, name?: string | null, status?: IngredientStatusType | null, category?: { __typename?: 'Category', id: string, name?: string | null } | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null }> | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null } | null };
+export type GetRecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, name?: string | null, originalLink?: string | null, instructions?: { __typename?: 'Recipe_instructions_Document', document: any } | null, ingredients?: Array<{ __typename?: 'Ingredient', id: string, name?: string | null, status?: IngredientStatusType | null, key?: boolean | null, onShoppingList?: boolean | null, category?: { __typename?: 'Category', id: string, name?: string | null } | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null }> | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null } | null };
+
+export type ShoppingListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ShoppingListQuery = { __typename?: 'Query', ingredients?: Array<{ __typename?: 'Ingredient', id: string, name?: string | null, status?: IngredientStatusType | null, key?: boolean | null, onShoppingList?: boolean | null, category?: { __typename?: 'Category', id: string, name?: string | null } | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null }> | null };
 
 
 export const SignInDocument = gql`
@@ -1063,6 +1091,8 @@ export const GetAllIngredientsDocument = gql`
     id
     name
     status
+    key
+    onShoppingList
     category {
       id
       name
@@ -1110,6 +1140,8 @@ export const UpdateIngredientStatusDocument = gql`
     id
     name
     status
+    key
+    onShoppingList
     category {
       id
       name
@@ -1151,6 +1183,55 @@ export function useUpdateIngredientStatusMutation(baseOptions?: Apollo.MutationH
 export type UpdateIngredientStatusMutationHookResult = ReturnType<typeof useUpdateIngredientStatusMutation>;
 export type UpdateIngredientStatusMutationResult = Apollo.MutationResult<UpdateIngredientStatusMutation>;
 export type UpdateIngredientStatusMutationOptions = Apollo.BaseMutationOptions<UpdateIngredientStatusMutation, UpdateIngredientStatusMutationVariables>;
+export const ToggleIngredientInListDocument = gql`
+    mutation ToggleIngredientInList($id: ID!, $onList: Boolean!) {
+  updateIngredient(where: {id: $id}, data: {onShoppingList: $onList}) {
+    id
+    name
+    status
+    key
+    onShoppingList
+    category {
+      id
+      name
+    }
+    image {
+      id
+      image {
+        publicUrlTransformed
+      }
+      altText
+    }
+  }
+}
+    `;
+export type ToggleIngredientInListMutationFn = Apollo.MutationFunction<ToggleIngredientInListMutation, ToggleIngredientInListMutationVariables>;
+
+/**
+ * __useToggleIngredientInListMutation__
+ *
+ * To run a mutation, you first call `useToggleIngredientInListMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useToggleIngredientInListMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [toggleIngredientInListMutation, { data, loading, error }] = useToggleIngredientInListMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      onList: // value for 'onList'
+ *   },
+ * });
+ */
+export function useToggleIngredientInListMutation(baseOptions?: Apollo.MutationHookOptions<ToggleIngredientInListMutation, ToggleIngredientInListMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ToggleIngredientInListMutation, ToggleIngredientInListMutationVariables>(ToggleIngredientInListDocument, options);
+      }
+export type ToggleIngredientInListMutationHookResult = ReturnType<typeof useToggleIngredientInListMutation>;
+export type ToggleIngredientInListMutationResult = Apollo.MutationResult<ToggleIngredientInListMutation>;
+export type ToggleIngredientInListMutationOptions = Apollo.BaseMutationOptions<ToggleIngredientInListMutation, ToggleIngredientInListMutationVariables>;
 export const GetAllRecipesDocument = gql`
     query GetAllRecipes {
   recipes {
@@ -1208,6 +1289,8 @@ export const GetRecipeDocument = gql`
       id
       name
       status
+      key
+      onShoppingList
       category {
         id
         name
@@ -1258,3 +1341,54 @@ export function useGetRecipeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetRecipeQueryHookResult = ReturnType<typeof useGetRecipeQuery>;
 export type GetRecipeLazyQueryHookResult = ReturnType<typeof useGetRecipeLazyQuery>;
 export type GetRecipeQueryResult = Apollo.QueryResult<GetRecipeQuery, GetRecipeQueryVariables>;
+export const ShoppingListQueryDocument = gql`
+    query ShoppingListQuery {
+  ingredients(
+    where: {OR: [{key: {equals: true}, status: {in: [OUT, LOW]}}, {onShoppingList: {equals: true}}]}
+  ) {
+    id
+    name
+    status
+    key
+    onShoppingList
+    category {
+      id
+      name
+    }
+    image {
+      id
+      image {
+        publicUrlTransformed
+      }
+      altText
+    }
+  }
+}
+    `;
+
+/**
+ * __useShoppingListQuery__
+ *
+ * To run a query within a React component, call `useShoppingListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShoppingListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShoppingListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useShoppingListQuery(baseOptions?: Apollo.QueryHookOptions<ShoppingListQuery, ShoppingListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ShoppingListQuery, ShoppingListQueryVariables>(ShoppingListQueryDocument, options);
+      }
+export function useShoppingListQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShoppingListQuery, ShoppingListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ShoppingListQuery, ShoppingListQueryVariables>(ShoppingListQueryDocument, options);
+        }
+export type ShoppingListQueryHookResult = ReturnType<typeof useShoppingListQuery>;
+export type ShoppingListQueryLazyQueryHookResult = ReturnType<typeof useShoppingListQueryLazyQuery>;
+export type ShoppingListQueryQueryResult = Apollo.QueryResult<ShoppingListQuery, ShoppingListQueryVariables>;

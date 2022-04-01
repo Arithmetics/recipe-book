@@ -1,6 +1,6 @@
 import { list } from '@keystone-6/core';
 
-import { text, relationship, password, select } from '@keystone-6/core/fields';
+import { text, relationship, password, select, checkbox } from '@keystone-6/core/fields';
 import { cloudinaryImage } from '@keystone-6/cloudinary';
 import { document } from '@keystone-6/fields-document';
 import { Lists } from '.keystone/types';
@@ -46,6 +46,8 @@ export const lists: Lists = {
         },
         ui: { displayMode: 'select' },
       }),
+      key: checkbox({ defaultValue: false }),
+      onShoppingList: checkbox({ defaultValue: false }),
       category: relationship({ ref: 'Category' }),
       recipes: relationship({ ref: 'Recipe.ingredients', many: true }),
       image: relationship({
@@ -57,6 +59,15 @@ export const lists: Lists = {
           inlineEdit: { fields: ['image', 'altText'] },
         },
       }),
+    },
+    hooks: {
+      resolveInput: async ({ resolvedData }) => {
+        const newResolve = { ...resolvedData };
+        if (resolvedData.status === 'GOOD') {
+          newResolve.onShoppingList = false;
+        }
+        return newResolve;
+      },
     },
   }),
   Category: list({

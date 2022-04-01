@@ -19,15 +19,17 @@ model User {
 }
 
 model Ingredient {
-  id         String               @id @default(uuid()) @postgresql.Uuid
-  name       String               @default("")
-  note       String               @default("")
-  status     IngredientStatusType
-  category   Category?            @relation("Ingredient_category", fields: [categoryId], references: [id])
-  categoryId String?              @map("category") @postgresql.Uuid
-  recipes    Recipe[]             @relation("Ingredient_recipes")
-  image      CloudImage?          @relation("Ingredient_image", fields: [imageId], references: [id])
-  imageId    String?              @map("image") @postgresql.Uuid
+  id             String               @id @default(uuid()) @postgresql.Uuid
+  name           String               @default("")
+  note           String               @default("")
+  status         IngredientStatusType
+  key            Boolean              @default(false)
+  onShoppingList Boolean              @default(false)
+  category       Category?            @relation("Ingredient_category", fields: [categoryId], references: [id])
+  categoryId     String?              @map("category") @postgresql.Uuid
+  recipes        Recipe[]             @relation("Ingredient_recipes")
+  image          CloudImage?          @relation("Ingredient_image", fields: [imageId], references: [id])
+  imageId        String?              @map("image") @postgresql.Uuid
 
   @@index([categoryId])
   @@index([imageId])

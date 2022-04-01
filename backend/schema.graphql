@@ -104,6 +104,8 @@ type Ingredient {
   name: String
   note: String
   status: IngredientStatusType
+  key: Boolean
+  onShoppingList: Boolean
   category: Category
   recipes(
     where: RecipeWhereInput! = {}
@@ -133,6 +135,8 @@ input IngredientWhereInput {
   name: StringFilter
   note: StringFilter
   status: IngredientStatusTypeNullableFilter
+  key: BooleanFilter
+  onShoppingList: BooleanFilter
   category: CategoryWhereInput
   recipes: RecipeManyRelationFilter
   image: CloudImageWhereInput
@@ -143,6 +147,11 @@ input IngredientStatusTypeNullableFilter {
   in: [IngredientStatusType!]
   notIn: [IngredientStatusType!]
   not: IngredientStatusTypeNullableFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
 }
 
 input RecipeManyRelationFilter {
@@ -156,12 +165,16 @@ input IngredientOrderByInput {
   name: OrderDirection
   note: OrderDirection
   status: OrderDirection
+  key: OrderDirection
+  onShoppingList: OrderDirection
 }
 
 input IngredientUpdateInput {
   name: String
   note: String
   status: IngredientStatusType
+  key: Boolean
+  onShoppingList: Boolean
   category: CategoryRelateToOneForUpdateInput
   recipes: RecipeRelateToManyForUpdateInput
   image: CloudImageRelateToOneForUpdateInput
@@ -195,6 +208,8 @@ input IngredientCreateInput {
   name: String
   note: String
   status: IngredientStatusType
+  key: Boolean
+  onShoppingList: Boolean
   category: CategoryRelateToOneForCreateInput
   recipes: RecipeRelateToManyForCreateInput
   image: CloudImageRelateToOneForCreateInput

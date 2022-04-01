@@ -15,6 +15,8 @@ export const GET_ALL_INGREDIENTS = gql`
       id
       name
       status
+      key
+      onShoppingList
       category {
         id
         name
@@ -36,6 +38,31 @@ export const UPDATE_INGREDIENT_STATUS = gql`
       id
       name
       status
+      key
+      onShoppingList
+      category {
+        id
+        name
+      }
+      image {
+        id
+        image {
+          publicUrlTransformed
+        }
+        altText
+      }
+    }
+  }
+`;
+
+export const TOGGLE_INGREDIENT_ON_LIST = gql`
+  mutation ToggleIngredientInList($id: ID!, $onList: Boolean!) {
+    updateIngredient(where: { id: $id }, data: { onShoppingList: $onList }) {
+      id
+      name
+      status
+      key
+      onShoppingList
       category {
         id
         name
@@ -82,6 +109,8 @@ export const GET_RECIPE = gql`
         id
         name
         status
+        key
+        onShoppingList
         category {
           id
           name
@@ -93,6 +122,36 @@ export const GET_RECIPE = gql`
           }
           altText
         }
+      }
+      image {
+        id
+        image {
+          publicUrlTransformed
+        }
+        altText
+      }
+    }
+  }
+`;
+
+export const SHOPPING_LIST_QUERY = gql`
+  query ShoppingListQuery {
+    ingredients(
+      where: {
+        OR: [
+          { key: { equals: true }, status: { in: [OUT, LOW] } }
+          { onShoppingList: { equals: true } }
+        ]
+      }
+    ) {
+      id
+      name
+      status
+      key
+      onShoppingList
+      category {
+        id
+        name
       }
       image {
         id

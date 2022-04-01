@@ -1,11 +1,11 @@
-import { Box, Flex, Center, Spinner, Text, Select, Button, Divider } from '@chakra-ui/react';
+import { Box, Flex, Center, Spinner, Text, Select, Button } from '@chakra-ui/react';
 import { useState } from 'react';
 import {
   IngredientStatusType,
   useGetAllCategoriesQuery,
   useGetAllIngredientsQuery,
 } from '../generated/graphql-types';
-import IngredientCard from './IngredientCard';
+import IngredientsByCategory from './IngredientsByCategory';
 
 export default function AllIngredients(): JSX.Element {
   const { data, loading } = useGetAllIngredientsQuery();
@@ -51,6 +51,9 @@ export default function AllIngredients(): JSX.Element {
 
   return (
     <Box>
+      <Text marginLeft={8} marginTop={4} fontSize={'3xl'}>
+        Ingredients
+      </Text>
       <Flex gap={4} margin={8} wrap={'wrap'}>
         <Select
           placeholder="Filter Category"
@@ -71,26 +74,10 @@ export default function AllIngredients(): JSX.Element {
         </Select>
         <Button onClick={resetFilters}>Reset Filters</Button>
       </Flex>
-
-      {categoryData?.categories?.map((c) => {
-        const ingredients = statusFilteredIngredients?.filter((i) => i?.category?.id === c.id);
-
-        if (ingredients?.length) {
-          return (
-            <>
-              <Text fontSize="2xl" marginLeft={8} marginTop={8}>
-                {c.name}
-              </Text>
-              <Flex margin={8} gap={4} wrap={'wrap'}>
-                {ingredients?.map((i) => (
-                  <IngredientCard key={i.id} ingredient={i} />
-                ))}
-              </Flex>
-              <Divider />
-            </>
-          );
-        }
-      })}
+      <IngredientsByCategory
+        categories={categoryData?.categories}
+        ingredients={statusFilteredIngredients}
+      />
     </Box>
   );
 }

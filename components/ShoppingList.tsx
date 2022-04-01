@@ -1,0 +1,34 @@
+import { Box, Center, Spinner, Text } from '@chakra-ui/react';
+import { useGetAllCategoriesQuery, useShoppingListQuery } from '../generated/graphql-types';
+
+import IngredientsByCategory from './IngredientsByCategory';
+
+export default function ShoppingList(): JSX.Element {
+  const { data, loading } = useShoppingListQuery({ fetchPolicy: 'network-only' });
+  const { data: categoryData, loading: loadingCategories } = useGetAllCategoriesQuery();
+
+  if (loading || loadingCategories) {
+    return (
+      <Box>
+        <Text fontSize={'3xl'} marginLeft={8} marginTop={8}>
+          Recipes
+        </Text>
+        <Center marginTop={'30vh'}>
+          <Spinner color="yellow.500" marginLeft="auto" marginRight="auto" size="xl" />
+        </Center>
+      </Box>
+    );
+  }
+
+  return (
+    <Box>
+      <Text fontSize={'3xl'} marginLeft={8} marginTop={8}>
+        Shopping
+      </Text>
+      <IngredientsByCategory
+        categories={categoryData?.categories}
+        ingredients={data?.ingredients}
+      />
+    </Box>
+  );
+}
