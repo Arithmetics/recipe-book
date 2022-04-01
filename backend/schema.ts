@@ -69,6 +69,11 @@ export const lists: Lists = {
         return newResolve;
       },
     },
+    ui: {
+      listView: {
+        initialColumns: ['name', 'status', 'key', 'onShoppingList'],
+      },
+    },
   }),
   Category: list({
     fields: {
