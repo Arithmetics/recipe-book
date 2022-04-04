@@ -13,8 +13,20 @@ export const cloudinary = {
   folder: 'recipes',
 };
 
+function isSignedIn({ session }: { session: unknown }): boolean {
+  return !!session;
+}
+
 export const lists: Lists = {
   User: list({
+    access: {
+      operation: {
+        query: isSignedIn,
+        delete: isSignedIn,
+        create: isSignedIn,
+        update: isSignedIn,
+      },
+    },
     fields: {
       name: text({ validation: { isRequired: true } }),
       email: text({
@@ -31,6 +43,14 @@ export const lists: Lists = {
     },
   }),
   Ingredient: list({
+    access: {
+      operation: {
+        query: isSignedIn,
+        delete: isSignedIn,
+        create: isSignedIn,
+        update: isSignedIn,
+      },
+    },
     fields: {
       name: text({ validation: { isRequired: true } }),
       note: text(),
@@ -76,6 +96,14 @@ export const lists: Lists = {
     },
   }),
   Category: list({
+    access: {
+      operation: {
+        query: isSignedIn,
+        delete: isSignedIn,
+        create: isSignedIn,
+        update: isSignedIn,
+      },
+    },
     fields: {
       name: text({ validation: { isRequired: true } }),
       image: relationship({
@@ -90,6 +118,14 @@ export const lists: Lists = {
     },
   }),
   Recipe: list({
+    access: {
+      operation: {
+        query: isSignedIn,
+        delete: isSignedIn,
+        create: isSignedIn,
+        update: isSignedIn,
+      },
+    },
     fields: {
       name: text({ validation: { isRequired: true } }),
       originalLink: text(),
@@ -111,6 +147,14 @@ export const lists: Lists = {
     },
   }),
   CloudImage: list({
+    access: {
+      operation: {
+        query: isSignedIn,
+        delete: isSignedIn,
+        create: isSignedIn,
+        update: isSignedIn,
+      },
+    },
     fields: {
       image: cloudinaryImage({
         cloudinary,
