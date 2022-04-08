@@ -233,11 +233,13 @@ input CloudImageRelateToOneForCreateInput {
 type Category {
   id: ID!
   name: String
+  order: Int
   image: CloudImage
 }
 
 input CategoryWhereUniqueInput {
   id: ID
+  order: Int
 }
 
 input CategoryWhereInput {
@@ -246,16 +248,30 @@ input CategoryWhereInput {
   NOT: [CategoryWhereInput!]
   id: IDFilter
   name: StringFilter
+  order: IntNullableFilter
   image: CloudImageWhereInput
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
 }
 
 input CategoryOrderByInput {
   id: OrderDirection
   name: OrderDirection
+  order: OrderDirection
 }
 
 input CategoryUpdateInput {
   name: String
+  order: Int
   image: CloudImageRelateToOneForUpdateInput
 }
 
@@ -266,6 +282,7 @@ input CategoryUpdateArgs {
 
 input CategoryCreateInput {
   name: String
+  order: Int
   image: CloudImageRelateToOneForCreateInput
 }
 

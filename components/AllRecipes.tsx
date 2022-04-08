@@ -15,7 +15,7 @@ export default function AllIngredients(): JSX.Element {
   if (loading || loadingCategories) {
     return (
       <Box>
-        <Text fontSize={'3xl'} marginLeft={8} marginTop={8}>
+        <Text fontSize={'3xl'} marginLeft={8} marginTop={4}>
           Recipes
         </Text>
         <Center marginTop={'30vh'}>
@@ -72,7 +72,7 @@ export default function AllIngredients(): JSX.Element {
         </Select>
         <Button onClick={resetFilters}>Reset Filters</Button>
       </Flex> */}
-      <Text fontSize={'3xl'} marginLeft={8} marginTop={8}>
+      <Text fontSize={'3xl'} marginLeft={8} marginTop={4}>
         Recipes
       </Text>
       <Flex margin={8} gap={4} wrap={'wrap'} justifyContent="center">

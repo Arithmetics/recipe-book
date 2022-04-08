@@ -1,6 +1,6 @@
 import { list } from '@keystone-6/core';
 
-import { text, relationship, password, select, checkbox } from '@keystone-6/core/fields';
+import { text, relationship, password, select, checkbox, integer } from '@keystone-6/core/fields';
 import { cloudinaryImage } from '@keystone-6/cloudinary';
 import { document } from '@keystone-6/fields-document';
 import { Lists } from '.keystone/types';
@@ -106,6 +106,7 @@ export const lists: Lists = {
     },
     fields: {
       name: text({ validation: { isRequired: true } }),
+      order: integer({ isIndexed: 'unique' }),
       image: relationship({
         ref: 'CloudImage',
         ui: {
