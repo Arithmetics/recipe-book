@@ -17,7 +17,9 @@ export default function AllIngredients(): JSX.Element {
   if (loading || loadingCategories) {
     return (
       <Box>
-        <Text fontSize={'3xl'}>Ingredients</Text>
+        <Text marginLeft={8} marginTop={4} fontSize={'3xl'}>
+          Ingredients
+        </Text>
         <Center marginTop={'30vh'}>
           <Spinner color="yellow.500" marginLeft="auto" marginRight="auto" size="xl" />
         </Center>
@@ -54,7 +56,7 @@ export default function AllIngredients(): JSX.Element {
       <Text marginLeft={8} marginTop={4} fontSize={'3xl'}>
         Ingredients
       </Text>
-      <Flex gap={4} margin={8} wrap={'wrap'}>
+      <Flex gap={4} margin={8} wrap={'wrap'} justifyContent="center">
         <Select
           placeholder="Filter Category"
           onChange={selectCategory}

@@ -75,7 +75,7 @@ export default function AllIngredients(): JSX.Element {
       <Text fontSize={'3xl'} marginLeft={8} marginTop={8}>
         Recipes
       </Text>
-      <Flex margin={8} gap={4} wrap={'wrap'}>
+      <Flex margin={8} gap={4} wrap={'wrap'} justifyContent="center">
         {data?.recipes?.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} />
         ))}

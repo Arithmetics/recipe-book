@@ -36,11 +36,17 @@ function progress(status?: IngredientStatusType | null): { value: number; colorS
 }
 
 export default function IngredientCard({ ingredient }: IngredientCardProps): JSX.Element {
-  const [updateIngredient, { loading: updateIngredientLoading }] =
-    useUpdateIngredientStatusMutation();
+  const [
+    updateIngredient,
+    // { loading: updateIngredientLoading
+    // }
+  ] = useUpdateIngredientStatusMutation();
 
-  const [toggleIngredientInListMutation, { loading: toggleIngredientListLoading }] =
-    useToggleIngredientInListMutation();
+  const [
+    toggleIngredientInListMutation,
+    // {
+    // loading: toggleIngredientListLoading }
+  ] = useToggleIngredientInListMutation();
 
   const { value, colorScheme } = progress(ingredient.status);
 
@@ -69,11 +75,9 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
     }
   };
 
-  console.log(updateIngredientLoading, toggleIngredientListLoading);
-
   return (
     <Stack
-      width={'150px'}
+      width={'120px'}
       bg={'gray.600'}
       boxShadow={'2xl'}
       rounded={'md'}
@@ -85,10 +89,10 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
         transform: 'scale(1.05)',
       }}
     >
-      <Text fontSize="md">{ingredient.name}</Text>
+      <Text fontSize="sm">{ingredient.name}</Text>
       <Image
-        h={'150px'}
-        w={'150px'}
+        h={'100px'}
+        w={'120px'}
         src={ingredient.image?.image?.publicUrlTransformed || ''}
         objectFit={'cover'}
         objectPosition={'top'}
@@ -98,7 +102,7 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
       <Progress isAnimated colorScheme={colorScheme} size="sm" value={value} />
       {!ingredient.key && (
         <Checkbox
-          size="lg"
+          size="md"
           colorScheme="yellow"
           isChecked={ingredient.onShoppingList || false}
           onChange={toggleIngredientOnShoppingList}
