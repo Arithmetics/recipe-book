@@ -21,7 +21,7 @@ export const lists: Lists = {
   User: list({
     access: {
       operation: {
-        query: isSignedIn,
+        query: () => true,
         delete: isSignedIn,
         create: isSignedIn,
         update: isSignedIn,
@@ -45,7 +45,7 @@ export const lists: Lists = {
   Ingredient: list({
     access: {
       operation: {
-        query: isSignedIn,
+        query: () => true,
         delete: isSignedIn,
         create: isSignedIn,
         update: isSignedIn,
@@ -98,7 +98,7 @@ export const lists: Lists = {
   Category: list({
     access: {
       operation: {
-        query: isSignedIn,
+        query: () => true,
         delete: isSignedIn,
         create: isSignedIn,
         update: isSignedIn,
@@ -121,7 +121,7 @@ export const lists: Lists = {
   Recipe: list({
     access: {
       operation: {
-        query: isSignedIn,
+        query: () => true,
         delete: isSignedIn,
         create: isSignedIn,
         update: isSignedIn,
@@ -150,7 +150,7 @@ export const lists: Lists = {
   CloudImage: list({
     access: {
       operation: {
-        query: isSignedIn,
+        query: () => true,
         delete: isSignedIn,
         create: isSignedIn,
         update: isSignedIn,
