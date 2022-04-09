@@ -31,6 +31,7 @@ function createClient({ headers, initialState }: ClientArgs): ApolloClient<Norma
         uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
         fetchOptions: {
           credentials: 'include',
+          mode: 'no-cors',
         },
         // pass the headers along from this request. This enables SSR with logged in state
         headers,
