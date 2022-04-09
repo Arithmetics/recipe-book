@@ -1,4 +1,14 @@
-import { Box, Flex, Center, Spinner, Text, Select, Button } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Center,
+  Spinner,
+  Text,
+  Select,
+  Button,
+  Checkbox,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 import { useState } from 'react';
 import {
   IngredientStatusType,
@@ -8,11 +18,17 @@ import {
 import IngredientsByCategory from './IngredientsByCategory';
 
 export default function AllIngredients(): JSX.Element {
+  const flexDirection = useBreakpointValue<'column' | 'row'>({
+    base: 'column',
+    lg: 'row',
+  });
+
   const { data, loading } = useGetAllIngredientsQuery();
   const { data: categoryData, loading: loadingCategories } = useGetAllCategoriesQuery();
 
   const [categoryId, setCategoryId] = useState<string>('');
   const [status, setStatus] = useState<IngredientStatusType | ''>('');
+  const [keyIngredientsOnly, setKeyIngredientsOnly] = useState<boolean>(false);
 
   if (loading || loadingCategories) {
     return (
@@ -38,6 +54,10 @@ export default function AllIngredients(): JSX.Element {
     }
   };
 
+  const toggleKeyIngredientsOnly = (): void => {
+    setKeyIngredientsOnly(!keyIngredientsOnly);
+  };
+
   const resetFilters = (): void => {
     setCategoryId('');
     setStatus('');
@@ -47,16 +67,20 @@ export default function AllIngredients(): JSX.Element {
     ? data?.ingredients?.filter((i) => i.category?.id === categoryId)
     : data?.ingredients;
 
-  const statusFilteredIngredients = status
-    ? categoryFilterIngredients?.filter((i) => i.status === status)
+  const keyIngredientFilter = keyIngredientsOnly
+    ? categoryFilterIngredients?.filter((i) => i.key)
     : categoryFilterIngredients;
+
+  const statusFilteredIngredients = status
+    ? keyIngredientFilter?.filter((i) => i.status === status)
+    : keyIngredientFilter;
 
   return (
     <Box>
       <Text marginLeft={8} marginTop={4} fontSize={'3xl'}>
         Ingredients
       </Text>
-      <Flex gap={4} margin={8} wrap={'wrap'}>
+      <Flex gap={4} margin={8} wrap={'wrap'} flexDirection={flexDirection}>
         <Select
           placeholder="Filter Category"
           onChange={selectCategory}
@@ -74,8 +98,18 @@ export default function AllIngredients(): JSX.Element {
           <option value={IngredientStatusType.Low}>Low</option>
           <option value={IngredientStatusType.Out}>Out</option>
         </Select>
-        <Button onClick={resetFilters}>Reset Filters</Button>
+        <Checkbox
+          size="lg"
+          colorScheme="yellow"
+          isChecked={keyIngredientsOnly}
+          onChange={toggleKeyIngredientsOnly}
+        >
+          Key Ingredients Only
+        </Checkbox>
       </Flex>
+      <Button marginLeft={8} width={120} onClick={resetFilters}>
+        Reset Filters
+      </Button>
       <IngredientsByCategory
         categories={categoryData?.categories}
         ingredients={statusFilteredIngredients}

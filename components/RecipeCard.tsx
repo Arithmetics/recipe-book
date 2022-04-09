@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Image, Stack, Stat, StatLabel, StatNumber, Text } from '@chakra-ui/react';
+import { Flex, Image, Stack, Tag, TagLabel, Text } from '@chakra-ui/react';
 import { Recipe } from '../generated/graphql-types';
 
 type RecipeCardProps = {
@@ -37,10 +37,14 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
         objectFit={'cover'}
         objectPosition={'top'}
       />
-      <Stat>
-        <StatLabel>Ingredients</StatLabel>
-        <StatNumber>{recipe.ingredientsCount}</StatNumber>
-      </Stat>
+      <Flex gap={1}>
+        <Tag size="sm" variant="outline" colorScheme="yellow">
+          <TagLabel>Instant Pot</TagLabel>
+        </Tag>
+        <Tag size="sm" variant="outline" colorScheme="yellow">
+          <TagLabel>Fish</TagLabel>
+        </Tag>
+      </Flex>
     </Stack>
   );
 }

@@ -25,6 +25,11 @@ export default function ShoppingList(): JSX.Element {
       <Text fontSize={'3xl'} marginLeft={8} marginTop={4}>
         Shopping
       </Text>
+      {!data?.ingredients?.length && (
+        <Center marginTop={'30vh'}>
+          <Text color="yellow.500">No items on list</Text>
+        </Center>
+      )}
       <IngredientsByCategory
         categories={categoryData?.categories}
         ingredients={data?.ingredients}
