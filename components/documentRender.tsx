@@ -1,5 +1,5 @@
 import { DocumentRendererProps } from '@keystone-6/document-renderer';
-import { Text, UnorderedList, ListItem } from '@chakra-ui/react';
+import { Text, UnorderedList, ListItem, OrderedList } from '@chakra-ui/react';
 
 export const renderers: DocumentRendererProps['renderers'] = {
   // use your editor's autocomplete to see what other renderers you can override
@@ -18,7 +18,16 @@ export const renderers: DocumentRendererProps['renderers'] = {
         </Text>
       );
     },
-    list: ({ children }) => {
+    list: ({ children, type }) => {
+      if (type === 'ordered') {
+        <OrderedList>
+          {children.map((c) => (
+            <ListItem color={'yellow.500'} key={c.key}>
+              {c}
+            </ListItem>
+          ))}
+        </OrderedList>;
+      }
       return (
         <UnorderedList>
           {children.map((c) => (

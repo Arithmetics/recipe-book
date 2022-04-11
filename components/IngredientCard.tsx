@@ -89,7 +89,15 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
         transform: 'scale(1.05)',
       }}
     >
-      <Text fontSize="sm">{ingredient.name}</Text>
+      <Text
+        fontSize="sm"
+        width={'105px'}
+        whiteSpace="nowrap"
+        text-overflow="ellipsis"
+        overflow="hidden"
+      >
+        {ingredient.name}
+      </Text>
       <Image
         h={'100px'}
         w={'120px'}

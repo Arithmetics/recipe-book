@@ -62,7 +62,7 @@ export default function RecipeCard({ id }: RecipeCardProps): JSX.Element {
         boxShadow={'dark-lg'}
         rounded={'md'}
       >
-        <DocumentRenderer document={recipe?.instructions?.document} renderers={renderers} />;
+        <DocumentRenderer document={recipe?.instructions?.document} renderers={renderers} />
       </Box>
     </Stack>
   );
