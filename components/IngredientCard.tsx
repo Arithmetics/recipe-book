@@ -95,6 +95,7 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
         whiteSpace="nowrap"
         text-overflow="ellipsis"
         overflow="hidden"
+        height={'40px'}
       >
         {ingredient.name}
       </Text>

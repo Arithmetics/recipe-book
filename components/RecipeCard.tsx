@@ -16,7 +16,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
   return (
     <Stack
       onClick={handleClick}
-      width={'150px'}
+      width={'175px'}
       bg={'gray.600'}
       boxShadow={'2xl'}
       rounded={'md'}
@@ -32,7 +32,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
       <Text fontSize="md">{recipe.name}</Text>
       <Image
         h={'150px'}
-        w={'150px'}
+        w={'160px'}
         src={recipe.image?.image?.publicUrlTransformed || ''}
         objectFit={'cover'}
         objectPosition={'top'}
