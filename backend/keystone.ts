@@ -15,7 +15,6 @@ import { lists } from './schema';
 import { withAuth, session } from './auth';
 
 const frontendUrl = process.env.FRONTEND_URL;
-console.log(`FRONT END URL IS: ${frontendUrl}`);
 
 if (!frontendUrl) {
   throw new Error(`Where's your FRONTEND_URL dude`);
