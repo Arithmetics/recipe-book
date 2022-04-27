@@ -31,16 +31,19 @@ export type Category = {
   id: Scalars['ID'];
   image?: Maybe<CloudImage>;
   name?: Maybe<Scalars['String']>;
+  order?: Maybe<Scalars['Int']>;
 };
 
 export type CategoryCreateInput = {
   image?: InputMaybe<CloudImageRelateToOneForCreateInput>;
   name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<Scalars['Int']>;
 };
 
 export type CategoryOrderByInput = {
   id?: InputMaybe<OrderDirection>;
   name?: InputMaybe<OrderDirection>;
+  order?: InputMaybe<OrderDirection>;
 };
 
 export type CategoryRelateToOneForCreateInput = {
@@ -62,6 +65,7 @@ export type CategoryUpdateArgs = {
 export type CategoryUpdateInput = {
   image?: InputMaybe<CloudImageRelateToOneForUpdateInput>;
   name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<Scalars['Int']>;
 };
 
 export type CategoryWhereInput = {
@@ -71,10 +75,12 @@ export type CategoryWhereInput = {
   id?: InputMaybe<IdFilter>;
   image?: InputMaybe<CloudImageWhereInput>;
   name?: InputMaybe<StringFilter>;
+  order?: InputMaybe<IntNullableFilter>;
 };
 
 export type CategoryWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
+  order?: InputMaybe<Scalars['Int']>;
 };
 
 export type CloudImage = {
@@ -308,6 +314,17 @@ export type IngredientWhereInput = {
 
 export type IngredientWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
+};
+
+export type IntNullableFilter = {
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<IntNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 export type KeystoneAdminMeta = {
@@ -933,6 +950,11 @@ export type SignOutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type SignOutMutation = { __typename?: 'Mutation', endSession: boolean };
 
+export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentUserQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', id: string, email?: string | null, name?: string | null } | null };
+
 export type GetAllCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1050,6 +1072,44 @@ export function useSignOutMutation(baseOptions?: Apollo.MutationHookOptions<Sign
 export type SignOutMutationHookResult = ReturnType<typeof useSignOutMutation>;
 export type SignOutMutationResult = Apollo.MutationResult<SignOutMutation>;
 export type SignOutMutationOptions = Apollo.BaseMutationOptions<SignOutMutation, SignOutMutationVariables>;
+export const CurrentUserDocument = gql`
+    query CurrentUser {
+  authenticatedItem {
+    ... on User {
+      id
+      email
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useCurrentUserQuery__
+ *
+ * To run a query within a React component, call `useCurrentUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCurrentUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCurrentUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCurrentUserQuery(baseOptions?: Apollo.QueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
+      }
+export function useCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CurrentUserQuery, CurrentUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument, options);
+        }
+export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
+export type CurrentUserLazyQueryHookResult = ReturnType<typeof useCurrentUserLazyQuery>;
+export type CurrentUserQueryResult = Apollo.QueryResult<CurrentUserQuery, CurrentUserQueryVariables>;
 export const GetAllCategoriesDocument = gql`
     query GetAllCategories {
   categories {

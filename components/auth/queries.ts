@@ -22,3 +22,15 @@ export const SIGNOUT_MUTATION = gql`
     endSession
   }
 `;
+
+export const CURRENT_USER_QUERY = gql`
+  query CurrentUser {
+    authenticatedItem {
+      ... on User {
+        id
+        email
+        name
+      }
+    }
+  }
+`;

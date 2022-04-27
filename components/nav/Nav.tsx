@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {
   chakra,
   Box,
@@ -13,15 +14,27 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 import { MdOutlineIntegrationInstructions, MdOutlineFoodBank } from 'react-icons/md';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import ButtonLink from '../ButtonLink';
+import LoginModal from './LoginModal';
+import { useCurrentUserQuery, AuthenticatedItem, User } from '../../generated/graphql-types';
+
+export function useUser(): Partial<AuthenticatedItem> | null | undefined {
+  const { data } = useCurrentUserQuery();
+  return data?.authenticatedItem as User;
+}
 
 export default function Nav(): JSX.Element {
   const mobileNav = useDisclosure();
-  //   const router = useRouter();
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-  //   const user = useUser();
+  const user = useUser();
+
+  useEffect(() => {
+    setIsLoginModalOpen(!user);
+  }, [user]);
 
   return (
     <>
+      <LoginModal isOpen={isLoginModalOpen} />
       <chakra.header bg="gray.900" w="full" px={{ base: 2, sm: 4 }} py={4} shadow="md">
         <Flex alignItems="center" justifyContent="space-between" mx="auto">
           <HStack display="flex" spacing={3} alignItems="center">
