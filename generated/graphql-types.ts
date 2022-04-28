@@ -31,16 +31,19 @@ export type Category = {
   id: Scalars['ID'];
   image?: Maybe<CloudImage>;
   name?: Maybe<Scalars['String']>;
+  order?: Maybe<Scalars['Int']>;
 };
 
 export type CategoryCreateInput = {
   image?: InputMaybe<CloudImageRelateToOneForCreateInput>;
   name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<Scalars['Int']>;
 };
 
 export type CategoryOrderByInput = {
   id?: InputMaybe<OrderDirection>;
   name?: InputMaybe<OrderDirection>;
+  order?: InputMaybe<OrderDirection>;
 };
 
 export type CategoryRelateToOneForCreateInput = {
@@ -62,6 +65,7 @@ export type CategoryUpdateArgs = {
 export type CategoryUpdateInput = {
   image?: InputMaybe<CloudImageRelateToOneForUpdateInput>;
   name?: InputMaybe<Scalars['String']>;
+  order?: InputMaybe<Scalars['Int']>;
 };
 
 export type CategoryWhereInput = {
@@ -71,10 +75,12 @@ export type CategoryWhereInput = {
   id?: InputMaybe<IdFilter>;
   image?: InputMaybe<CloudImageWhereInput>;
   name?: InputMaybe<StringFilter>;
+  order?: InputMaybe<IntNullableFilter>;
 };
 
 export type CategoryWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
+  order?: InputMaybe<Scalars['Int']>;
 };
 
 export type CloudImage = {
@@ -308,6 +314,17 @@ export type IngredientWhereInput = {
 
 export type IngredientWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
+};
+
+export type IntNullableFilter = {
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<IntNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 export type KeystoneAdminMeta = {
