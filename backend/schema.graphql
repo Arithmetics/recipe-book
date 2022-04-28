@@ -457,6 +457,46 @@ input CloudImageCreateInput {
   altText: String
 }
 
+type RecipeToTry {
+  id: ID!
+  name: String
+  originalLink: String
+}
+
+input RecipeToTryWhereUniqueInput {
+  id: ID
+}
+
+input RecipeToTryWhereInput {
+  AND: [RecipeToTryWhereInput!]
+  OR: [RecipeToTryWhereInput!]
+  NOT: [RecipeToTryWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  originalLink: StringFilter
+}
+
+input RecipeToTryOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  originalLink: OrderDirection
+}
+
+input RecipeToTryUpdateInput {
+  name: String
+  originalLink: String
+}
+
+input RecipeToTryUpdateArgs {
+  where: RecipeToTryWhereUniqueInput!
+  data: RecipeToTryUpdateInput!
+}
+
+input RecipeToTryCreateInput {
+  name: String
+  originalLink: String
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -505,6 +545,15 @@ type Mutation {
   updateCloudImages(data: [CloudImageUpdateArgs!]!): [CloudImage]
   deleteCloudImage(where: CloudImageWhereUniqueInput!): CloudImage
   deleteCloudImages(where: [CloudImageWhereUniqueInput!]!): [CloudImage]
+  createRecipeToTry(data: RecipeToTryCreateInput!): RecipeToTry
+  createRecipeToTries(data: [RecipeToTryCreateInput!]!): [RecipeToTry]
+  updateRecipeToTry(
+    where: RecipeToTryWhereUniqueInput!
+    data: RecipeToTryUpdateInput!
+  ): RecipeToTry
+  updateRecipeToTries(data: [RecipeToTryUpdateArgs!]!): [RecipeToTry]
+  deleteRecipeToTry(where: RecipeToTryWhereUniqueInput!): RecipeToTry
+  deleteRecipeToTries(where: [RecipeToTryWhereUniqueInput!]!): [RecipeToTry]
   endSession: Boolean!
   authenticateUserWithPassword(
     email: String!
@@ -575,6 +624,14 @@ type Query {
   ): [CloudImage!]
   cloudImage(where: CloudImageWhereUniqueInput!): CloudImage
   cloudImagesCount(where: CloudImageWhereInput! = {}): Int
+  recipeToTries(
+    where: RecipeToTryWhereInput! = {}
+    orderBy: [RecipeToTryOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [RecipeToTry!]
+  recipeToTry(where: RecipeToTryWhereUniqueInput!): RecipeToTry
+  recipeToTriesCount(where: RecipeToTryWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

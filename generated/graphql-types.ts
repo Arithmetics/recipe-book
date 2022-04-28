@@ -438,6 +438,8 @@ export type Mutation = {
   createIngredients?: Maybe<Array<Maybe<Ingredient>>>;
   createInitialUser: UserAuthenticationWithPasswordSuccess;
   createRecipe?: Maybe<Recipe>;
+  createRecipeToTries?: Maybe<Array<Maybe<RecipeToTry>>>;
+  createRecipeToTry?: Maybe<RecipeToTry>;
   createRecipes?: Maybe<Array<Maybe<Recipe>>>;
   createUser?: Maybe<User>;
   createUsers?: Maybe<Array<Maybe<User>>>;
@@ -448,6 +450,8 @@ export type Mutation = {
   deleteIngredient?: Maybe<Ingredient>;
   deleteIngredients?: Maybe<Array<Maybe<Ingredient>>>;
   deleteRecipe?: Maybe<Recipe>;
+  deleteRecipeToTries?: Maybe<Array<Maybe<RecipeToTry>>>;
+  deleteRecipeToTry?: Maybe<RecipeToTry>;
   deleteRecipes?: Maybe<Array<Maybe<Recipe>>>;
   deleteUser?: Maybe<User>;
   deleteUsers?: Maybe<Array<Maybe<User>>>;
@@ -459,6 +463,8 @@ export type Mutation = {
   updateIngredient?: Maybe<Ingredient>;
   updateIngredients?: Maybe<Array<Maybe<Ingredient>>>;
   updateRecipe?: Maybe<Recipe>;
+  updateRecipeToTries?: Maybe<Array<Maybe<RecipeToTry>>>;
+  updateRecipeToTry?: Maybe<RecipeToTry>;
   updateRecipes?: Maybe<Array<Maybe<Recipe>>>;
   updateUser?: Maybe<User>;
   updateUsers?: Maybe<Array<Maybe<User>>>;
@@ -511,6 +517,16 @@ export type MutationCreateRecipeArgs = {
 };
 
 
+export type MutationCreateRecipeToTriesArgs = {
+  data: Array<RecipeToTryCreateInput>;
+};
+
+
+export type MutationCreateRecipeToTryArgs = {
+  data: RecipeToTryCreateInput;
+};
+
+
 export type MutationCreateRecipesArgs = {
   data: Array<RecipeCreateInput>;
 };
@@ -558,6 +574,16 @@ export type MutationDeleteIngredientsArgs = {
 
 export type MutationDeleteRecipeArgs = {
   where: RecipeWhereUniqueInput;
+};
+
+
+export type MutationDeleteRecipeToTriesArgs = {
+  where: Array<RecipeToTryWhereUniqueInput>;
+};
+
+
+export type MutationDeleteRecipeToTryArgs = {
+  where: RecipeToTryWhereUniqueInput;
 };
 
 
@@ -615,6 +641,17 @@ export type MutationUpdateRecipeArgs = {
 };
 
 
+export type MutationUpdateRecipeToTriesArgs = {
+  data: Array<RecipeToTryUpdateArgs>;
+};
+
+
+export type MutationUpdateRecipeToTryArgs = {
+  data: RecipeToTryUpdateInput;
+  where: RecipeToTryWhereUniqueInput;
+};
+
+
 export type MutationUpdateRecipesArgs = {
   data: Array<RecipeUpdateArgs>;
 };
@@ -668,6 +705,9 @@ export type Query = {
   ingredientsCount?: Maybe<Scalars['Int']>;
   keystone: KeystoneMeta;
   recipe?: Maybe<Recipe>;
+  recipeToTries?: Maybe<Array<RecipeToTry>>;
+  recipeToTriesCount?: Maybe<Scalars['Int']>;
+  recipeToTry?: Maybe<RecipeToTry>;
   recipes?: Maybe<Array<Recipe>>;
   recipesCount?: Maybe<Scalars['Int']>;
   user?: Maybe<User>;
@@ -732,6 +772,24 @@ export type QueryIngredientsCountArgs = {
 
 export type QueryRecipeArgs = {
   where: RecipeWhereUniqueInput;
+};
+
+
+export type QueryRecipeToTriesArgs = {
+  orderBy?: Array<RecipeToTryOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: RecipeToTryWhereInput;
+};
+
+
+export type QueryRecipeToTriesCountArgs = {
+  where?: RecipeToTryWhereInput;
+};
+
+
+export type QueryRecipeToTryArgs = {
+  where: RecipeToTryWhereUniqueInput;
 };
 
 
@@ -824,6 +882,47 @@ export type RecipeRelateToManyForUpdateInput = {
   create?: InputMaybe<Array<RecipeCreateInput>>;
   disconnect?: InputMaybe<Array<RecipeWhereUniqueInput>>;
   set?: InputMaybe<Array<RecipeWhereUniqueInput>>;
+};
+
+export type RecipeToTry = {
+  __typename?: 'RecipeToTry';
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  originalLink?: Maybe<Scalars['String']>;
+};
+
+export type RecipeToTryCreateInput = {
+  name?: InputMaybe<Scalars['String']>;
+  originalLink?: InputMaybe<Scalars['String']>;
+};
+
+export type RecipeToTryOrderByInput = {
+  id?: InputMaybe<OrderDirection>;
+  name?: InputMaybe<OrderDirection>;
+  originalLink?: InputMaybe<OrderDirection>;
+};
+
+export type RecipeToTryUpdateArgs = {
+  data: RecipeToTryUpdateInput;
+  where: RecipeToTryWhereUniqueInput;
+};
+
+export type RecipeToTryUpdateInput = {
+  name?: InputMaybe<Scalars['String']>;
+  originalLink?: InputMaybe<Scalars['String']>;
+};
+
+export type RecipeToTryWhereInput = {
+  AND?: InputMaybe<Array<RecipeToTryWhereInput>>;
+  NOT?: InputMaybe<Array<RecipeToTryWhereInput>>;
+  OR?: InputMaybe<Array<RecipeToTryWhereInput>>;
+  id?: InputMaybe<IdFilter>;
+  name?: InputMaybe<StringFilter>;
+  originalLink?: InputMaybe<StringFilter>;
+};
+
+export type RecipeToTryWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type RecipeUpdateArgs = {
@@ -997,6 +1096,11 @@ export type ShoppingListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ShoppingListQuery = { __typename?: 'Query', ingredients?: Array<{ __typename?: 'Ingredient', id: string, name?: string | null, status?: IngredientStatusType | null, key?: boolean | null, onShoppingList?: boolean | null, category?: { __typename?: 'Category', id: string, name?: string | null } | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null }> | null };
+
+export type RecipesToTryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RecipesToTryQuery = { __typename?: 'Query', recipeToTries?: Array<{ __typename?: 'RecipeToTry', name?: string | null, originalLink?: string | null }> | null };
 
 
 export const SignInDocument = gql`
@@ -1452,3 +1556,38 @@ export function useShoppingListQueryLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type ShoppingListQueryHookResult = ReturnType<typeof useShoppingListQuery>;
 export type ShoppingListQueryLazyQueryHookResult = ReturnType<typeof useShoppingListQueryLazyQuery>;
 export type ShoppingListQueryQueryResult = Apollo.QueryResult<ShoppingListQuery, ShoppingListQueryVariables>;
+export const RecipesToTryQueryDocument = gql`
+    query RecipesToTryQuery {
+  recipeToTries {
+    name
+    originalLink
+  }
+}
+    `;
+
+/**
+ * __useRecipesToTryQuery__
+ *
+ * To run a query within a React component, call `useRecipesToTryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRecipesToTryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRecipesToTryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRecipesToTryQuery(baseOptions?: Apollo.QueryHookOptions<RecipesToTryQuery, RecipesToTryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RecipesToTryQuery, RecipesToTryQueryVariables>(RecipesToTryQueryDocument, options);
+      }
+export function useRecipesToTryQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RecipesToTryQuery, RecipesToTryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RecipesToTryQuery, RecipesToTryQueryVariables>(RecipesToTryQueryDocument, options);
+        }
+export type RecipesToTryQueryHookResult = ReturnType<typeof useRecipesToTryQuery>;
+export type RecipesToTryQueryLazyQueryHookResult = ReturnType<typeof useRecipesToTryQueryLazyQuery>;
+export type RecipesToTryQueryQueryResult = Apollo.QueryResult<RecipesToTryQuery, RecipesToTryQueryVariables>;

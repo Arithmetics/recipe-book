@@ -435,6 +435,8 @@ export type Mutation = {
   createIngredients?: Maybe<Array<Maybe<Ingredient>>>;
   createInitialUser: UserAuthenticationWithPasswordSuccess;
   createRecipe?: Maybe<Recipe>;
+  createRecipeToTries?: Maybe<Array<Maybe<RecipeToTry>>>;
+  createRecipeToTry?: Maybe<RecipeToTry>;
   createRecipes?: Maybe<Array<Maybe<Recipe>>>;
   createUser?: Maybe<User>;
   createUsers?: Maybe<Array<Maybe<User>>>;
@@ -445,6 +447,8 @@ export type Mutation = {
   deleteIngredient?: Maybe<Ingredient>;
   deleteIngredients?: Maybe<Array<Maybe<Ingredient>>>;
   deleteRecipe?: Maybe<Recipe>;
+  deleteRecipeToTries?: Maybe<Array<Maybe<RecipeToTry>>>;
+  deleteRecipeToTry?: Maybe<RecipeToTry>;
   deleteRecipes?: Maybe<Array<Maybe<Recipe>>>;
   deleteUser?: Maybe<User>;
   deleteUsers?: Maybe<Array<Maybe<User>>>;
@@ -456,6 +460,8 @@ export type Mutation = {
   updateIngredient?: Maybe<Ingredient>;
   updateIngredients?: Maybe<Array<Maybe<Ingredient>>>;
   updateRecipe?: Maybe<Recipe>;
+  updateRecipeToTries?: Maybe<Array<Maybe<RecipeToTry>>>;
+  updateRecipeToTry?: Maybe<RecipeToTry>;
   updateRecipes?: Maybe<Array<Maybe<Recipe>>>;
   updateUser?: Maybe<User>;
   updateUsers?: Maybe<Array<Maybe<User>>>;
@@ -508,6 +514,16 @@ export type MutationCreateRecipeArgs = {
 };
 
 
+export type MutationCreateRecipeToTriesArgs = {
+  data: Array<RecipeToTryCreateInput>;
+};
+
+
+export type MutationCreateRecipeToTryArgs = {
+  data: RecipeToTryCreateInput;
+};
+
+
 export type MutationCreateRecipesArgs = {
   data: Array<RecipeCreateInput>;
 };
@@ -555,6 +571,16 @@ export type MutationDeleteIngredientsArgs = {
 
 export type MutationDeleteRecipeArgs = {
   where: RecipeWhereUniqueInput;
+};
+
+
+export type MutationDeleteRecipeToTriesArgs = {
+  where: Array<RecipeToTryWhereUniqueInput>;
+};
+
+
+export type MutationDeleteRecipeToTryArgs = {
+  where: RecipeToTryWhereUniqueInput;
 };
 
 
@@ -612,6 +638,17 @@ export type MutationUpdateRecipeArgs = {
 };
 
 
+export type MutationUpdateRecipeToTriesArgs = {
+  data: Array<RecipeToTryUpdateArgs>;
+};
+
+
+export type MutationUpdateRecipeToTryArgs = {
+  data: RecipeToTryUpdateInput;
+  where: RecipeToTryWhereUniqueInput;
+};
+
+
 export type MutationUpdateRecipesArgs = {
   data: Array<RecipeUpdateArgs>;
 };
@@ -665,6 +702,9 @@ export type Query = {
   ingredientsCount?: Maybe<Scalars['Int']>;
   keystone: KeystoneMeta;
   recipe?: Maybe<Recipe>;
+  recipeToTries?: Maybe<Array<RecipeToTry>>;
+  recipeToTriesCount?: Maybe<Scalars['Int']>;
+  recipeToTry?: Maybe<RecipeToTry>;
   recipes?: Maybe<Array<Recipe>>;
   recipesCount?: Maybe<Scalars['Int']>;
   user?: Maybe<User>;
@@ -729,6 +769,24 @@ export type QueryIngredientsCountArgs = {
 
 export type QueryRecipeArgs = {
   where: RecipeWhereUniqueInput;
+};
+
+
+export type QueryRecipeToTriesArgs = {
+  orderBy?: Array<RecipeToTryOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: RecipeToTryWhereInput;
+};
+
+
+export type QueryRecipeToTriesCountArgs = {
+  where?: RecipeToTryWhereInput;
+};
+
+
+export type QueryRecipeToTryArgs = {
+  where: RecipeToTryWhereUniqueInput;
 };
 
 
@@ -821,6 +879,47 @@ export type RecipeRelateToManyForUpdateInput = {
   create?: InputMaybe<Array<RecipeCreateInput>>;
   disconnect?: InputMaybe<Array<RecipeWhereUniqueInput>>;
   set?: InputMaybe<Array<RecipeWhereUniqueInput>>;
+};
+
+export type RecipeToTry = {
+  __typename?: 'RecipeToTry';
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  originalLink?: Maybe<Scalars['String']>;
+};
+
+export type RecipeToTryCreateInput = {
+  name?: InputMaybe<Scalars['String']>;
+  originalLink?: InputMaybe<Scalars['String']>;
+};
+
+export type RecipeToTryOrderByInput = {
+  id?: InputMaybe<OrderDirection>;
+  name?: InputMaybe<OrderDirection>;
+  originalLink?: InputMaybe<OrderDirection>;
+};
+
+export type RecipeToTryUpdateArgs = {
+  data: RecipeToTryUpdateInput;
+  where: RecipeToTryWhereUniqueInput;
+};
+
+export type RecipeToTryUpdateInput = {
+  name?: InputMaybe<Scalars['String']>;
+  originalLink?: InputMaybe<Scalars['String']>;
+};
+
+export type RecipeToTryWhereInput = {
+  AND?: InputMaybe<Array<RecipeToTryWhereInput>>;
+  NOT?: InputMaybe<Array<RecipeToTryWhereInput>>;
+  OR?: InputMaybe<Array<RecipeToTryWhereInput>>;
+  id?: InputMaybe<IdFilter>;
+  name?: InputMaybe<StringFilter>;
+  originalLink?: InputMaybe<StringFilter>;
+};
+
+export type RecipeToTryWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type RecipeUpdateArgs = {
