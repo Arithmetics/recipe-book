@@ -169,4 +169,23 @@ export const lists: Lists = {
       },
     },
   }),
+  RecipeToTry: list({
+    access: {
+      operation: {
+        query: () => true,
+        delete: isSignedIn,
+        create: isSignedIn,
+        update: isSignedIn,
+      },
+    },
+    fields: {
+      name: text({ validation: { isRequired: true } }),
+      originalLink: text(),
+    },
+    ui: {
+      listView: {
+        initialColumns: ['name', 'originalLink'],
+      },
+    },
+  }),
 };

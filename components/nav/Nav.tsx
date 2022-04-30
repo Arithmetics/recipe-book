@@ -13,6 +13,7 @@ import {
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { MdOutlineIntegrationInstructions, MdOutlineFoodBank } from 'react-icons/md';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { GiMeat } from 'react-icons/gi';
 import ButtonLink from '../ButtonLink';
 import LoginModal from './LoginModal';
 import { useCurrentUserQuery, AuthenticatedItem, User } from '../../generated/graphql-types';
@@ -90,6 +91,13 @@ export default function Nav(): JSX.Element {
                   buttonTheme={{ variant: 'ghost' }}
                   layoutProps={{ w: 'full' }}
                 />
+                <ButtonLink
+                  title="To Try"
+                  leftIcon={<GiMeat />}
+                  href={`/recipes-to-try`}
+                  buttonTheme={{ variant: 'ghost' }}
+                  layoutProps={{ w: 'full' }}
+                />
               </VStack>
             </Box>
             <HStack spacing={3} display={{ base: 'none', md: 'inline-flex' }}>
@@ -109,6 +117,12 @@ export default function Nav(): JSX.Element {
                 title="Shopping"
                 leftIcon={<AiOutlineShoppingCart />}
                 href={'/shoppingList'}
+                buttonTheme={{ variant: 'ghost' }}
+              />
+              <ButtonLink
+                title="To Try"
+                leftIcon={<GiMeat />}
+                href={'/recipes-to-try'}
                 buttonTheme={{ variant: 'ghost' }}
               />
             </HStack>

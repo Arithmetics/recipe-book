@@ -67,6 +67,12 @@ model CloudImage {
   from_Recipe_image     Recipe[]     @relation("Recipe_image")
 }
 
+model RecipeToTry {
+  id           String @id @default(uuid()) @postgresql.Uuid
+  name         String @default("")
+  originalLink String @default("")
+}
+
 enum IngredientStatusType {
   GOOD
   LOW

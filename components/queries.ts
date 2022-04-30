@@ -163,3 +163,12 @@ export const SHOPPING_LIST_QUERY = gql`
     }
   }
 `;
+
+export const RECIPES_TO_TRY_QUERY = gql`
+  query RecipesToTryQuery {
+    recipeToTries {
+      name
+      originalLink
+    }
+  }
+`;
