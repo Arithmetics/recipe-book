@@ -140,6 +140,7 @@ export const lists: Lists = {
           inlineEdit: { fields: ['image', 'altText'] },
         },
       }),
+      tags: relationship({ ref: 'Tag', many: true }),
       instructions: document({
         formatting: true,
         dividers: true,
@@ -186,6 +187,28 @@ export const lists: Lists = {
       listView: {
         initialColumns: ['name', 'originalLink'],
       },
+    },
+  }),
+  Tag: list({
+    access: {
+      operation: {
+        query: () => true,
+        delete: isSignedIn,
+        create: isSignedIn,
+        update: isSignedIn,
+      },
+    },
+    fields: {
+      name: text({ validation: { isRequired: true } }),
+      image: relationship({
+        ref: 'CloudImage',
+        ui: {
+          displayMode: 'cards',
+          cardFields: ['image', 'altText'],
+          inlineCreate: { fields: ['image', 'altText'] },
+          inlineEdit: { fields: ['image', 'altText'] },
+        },
+      }),
     },
   }),
 };

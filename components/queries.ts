@@ -85,6 +85,9 @@ export const GET_ALL_RECIPES = gql`
       name
       originalLink
       ingredientsCount
+      tags {
+        name
+      }
       image {
         id
         image {
@@ -104,6 +107,9 @@ export const GET_RECIPE = gql`
       originalLink
       instructions {
         document
+      }
+      tags {
+        name
       }
       ingredients {
         id

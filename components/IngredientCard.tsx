@@ -1,4 +1,4 @@
-import { Checkbox, Image, Progress, Stack, Text } from '@chakra-ui/react';
+import { Checkbox, Image, Progress, Stack, Text, useToast } from '@chakra-ui/react';
 import {
   Ingredient,
   IngredientStatusType,
@@ -36,17 +36,10 @@ function progress(status?: IngredientStatusType | null): { value: number; colorS
 }
 
 export default function IngredientCard({ ingredient }: IngredientCardProps): JSX.Element {
-  const [
-    updateIngredient,
-    // { loading: updateIngredientLoading
-    // }
-  ] = useUpdateIngredientStatusMutation();
+  const toast = useToast();
+  const [updateIngredient] = useUpdateIngredientStatusMutation();
 
-  const [
-    toggleIngredientInListMutation,
-    // {
-    // loading: toggleIngredientListLoading }
-  ] = useToggleIngredientInListMutation();
+  const [toggleIngredientInListMutation] = useToggleIngredientInListMutation();
 
   const { value, colorScheme } = progress(ingredient.status);
 
@@ -71,7 +64,13 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
         updateIngredient({ variables: { status: IngredientStatusType.Low, id: ingredient.id } });
       }
     } catch (e) {
-      console.log(e);
+      toast({
+        title: 'Error',
+        description: 'Ingredient Update fail',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -92,7 +91,6 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
       <Text
         fontSize="sm"
         width={'105px'}
-        whiteSpace="nowrap"
         text-overflow="ellipsis"
         overflow="hidden"
         height={'40px'}
