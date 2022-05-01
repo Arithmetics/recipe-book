@@ -1,5 +1,9 @@
 import { Box, Flex, Center, Spinner, Text } from '@chakra-ui/react';
-import { useGetAllCategoriesQuery, useGetAllRecipesQuery } from '../generated/graphql-types';
+import {
+  useGetAllCategoriesQuery,
+  useGetAllRecipesQuery,
+  Recipe,
+} from '../generated/graphql-types';
 import RecipeCard from './RecipeCard';
 
 export default function AllIngredients(): JSX.Element {
@@ -77,7 +81,7 @@ export default function AllIngredients(): JSX.Element {
       </Text>
       <Flex margin={8} gap={4} wrap={'wrap'} justifyContent="center">
         {data?.recipes?.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+          <RecipeCard key={recipe.id} recipe={recipe as Recipe} />
         ))}
       </Flex>
     </Box>

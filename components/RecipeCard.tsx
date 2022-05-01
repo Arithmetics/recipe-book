@@ -16,7 +16,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
   return (
     <Stack
       onClick={handleClick}
-      width={'175px'}
+      width={'165px'}
       bg={'gray.600'}
       boxShadow={'2xl'}
       rounded={'md'}
@@ -32,18 +32,19 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
       <Text fontSize="md">{recipe.name}</Text>
       <Image
         h={'150px'}
-        w={'160px'}
+        w={'150px'}
         src={recipe.image?.image?.publicUrlTransformed || ''}
         objectFit={'cover'}
         objectPosition={'top'}
       />
       <Flex gap={1}>
-        <Tag size="sm" variant="outline" colorScheme="yellow">
-          <TagLabel>Instant Pot</TagLabel>
-        </Tag>
-        <Tag size="sm" variant="outline" colorScheme="yellow">
-          <TagLabel>Fish</TagLabel>
-        </Tag>
+        {recipe.tags?.map((tag) => {
+          return (
+            <Tag key={tag.name} size="sm" variant="outline" colorScheme="yellow">
+              <TagLabel>{tag.name}</TagLabel>
+            </Tag>
+          );
+        })}
       </Flex>
     </Stack>
   );

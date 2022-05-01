@@ -53,6 +53,7 @@ model Recipe {
   ingredients  Ingredient[] @relation("Ingredient_recipes")
   image        CloudImage?  @relation("Recipe_image", fields: [imageId], references: [id])
   imageId      String?      @map("image") @postgresql.Uuid
+  tags         Tag[]        @relation("Recipe_tags")
   instructions Json         @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 
   @@index([imageId])
@@ -65,12 +66,23 @@ model CloudImage {
   from_Ingredient_image Ingredient[] @relation("Ingredient_image")
   from_Category_image   Category[]   @relation("Category_image")
   from_Recipe_image     Recipe[]     @relation("Recipe_image")
+  from_Tag_image        Tag[]        @relation("Tag_image")
 }
 
 model RecipeToTry {
   id           String @id @default(uuid()) @postgresql.Uuid
   name         String @default("")
   originalLink String @default("")
+}
+
+model Tag {
+  id               String      @id @default(uuid()) @postgresql.Uuid
+  name             String      @default("")
+  image            CloudImage? @relation("Tag_image", fields: [imageId], references: [id])
+  imageId          String?     @map("image") @postgresql.Uuid
+  from_Recipe_tags Recipe[]    @relation("Recipe_tags")
+
+  @@index([imageId])
 }
 
 enum IngredientStatusType {

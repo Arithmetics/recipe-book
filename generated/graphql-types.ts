@@ -441,6 +441,8 @@ export type Mutation = {
   createRecipeToTries?: Maybe<Array<Maybe<RecipeToTry>>>;
   createRecipeToTry?: Maybe<RecipeToTry>;
   createRecipes?: Maybe<Array<Maybe<Recipe>>>;
+  createTag?: Maybe<Tag>;
+  createTags?: Maybe<Array<Maybe<Tag>>>;
   createUser?: Maybe<User>;
   createUsers?: Maybe<Array<Maybe<User>>>;
   deleteCategories?: Maybe<Array<Maybe<Category>>>;
@@ -453,6 +455,8 @@ export type Mutation = {
   deleteRecipeToTries?: Maybe<Array<Maybe<RecipeToTry>>>;
   deleteRecipeToTry?: Maybe<RecipeToTry>;
   deleteRecipes?: Maybe<Array<Maybe<Recipe>>>;
+  deleteTag?: Maybe<Tag>;
+  deleteTags?: Maybe<Array<Maybe<Tag>>>;
   deleteUser?: Maybe<User>;
   deleteUsers?: Maybe<Array<Maybe<User>>>;
   endSession: Scalars['Boolean'];
@@ -466,6 +470,8 @@ export type Mutation = {
   updateRecipeToTries?: Maybe<Array<Maybe<RecipeToTry>>>;
   updateRecipeToTry?: Maybe<RecipeToTry>;
   updateRecipes?: Maybe<Array<Maybe<Recipe>>>;
+  updateTag?: Maybe<Tag>;
+  updateTags?: Maybe<Array<Maybe<Tag>>>;
   updateUser?: Maybe<User>;
   updateUsers?: Maybe<Array<Maybe<User>>>;
 };
@@ -532,6 +538,16 @@ export type MutationCreateRecipesArgs = {
 };
 
 
+export type MutationCreateTagArgs = {
+  data: TagCreateInput;
+};
+
+
+export type MutationCreateTagsArgs = {
+  data: Array<TagCreateInput>;
+};
+
+
 export type MutationCreateUserArgs = {
   data: UserCreateInput;
 };
@@ -589,6 +605,16 @@ export type MutationDeleteRecipeToTryArgs = {
 
 export type MutationDeleteRecipesArgs = {
   where: Array<RecipeWhereUniqueInput>;
+};
+
+
+export type MutationDeleteTagArgs = {
+  where: TagWhereUniqueInput;
+};
+
+
+export type MutationDeleteTagsArgs = {
+  where: Array<TagWhereUniqueInput>;
 };
 
 
@@ -657,6 +683,17 @@ export type MutationUpdateRecipesArgs = {
 };
 
 
+export type MutationUpdateTagArgs = {
+  data: TagUpdateInput;
+  where: TagWhereUniqueInput;
+};
+
+
+export type MutationUpdateTagsArgs = {
+  data: Array<TagUpdateArgs>;
+};
+
+
 export type MutationUpdateUserArgs = {
   data: UserUpdateInput;
   where: UserWhereUniqueInput;
@@ -710,6 +747,9 @@ export type Query = {
   recipeToTry?: Maybe<RecipeToTry>;
   recipes?: Maybe<Array<Recipe>>;
   recipesCount?: Maybe<Scalars['Int']>;
+  tag?: Maybe<Tag>;
+  tags?: Maybe<Array<Tag>>;
+  tagsCount?: Maybe<Scalars['Int']>;
   user?: Maybe<User>;
   users?: Maybe<Array<User>>;
   usersCount?: Maybe<Scalars['Int']>;
@@ -806,6 +846,24 @@ export type QueryRecipesCountArgs = {
 };
 
 
+export type QueryTagArgs = {
+  where: TagWhereUniqueInput;
+};
+
+
+export type QueryTagsArgs = {
+  orderBy?: Array<TagOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: TagWhereInput;
+};
+
+
+export type QueryTagsCountArgs = {
+  where?: TagWhereInput;
+};
+
+
 export type QueryUserArgs = {
   where: UserWhereUniqueInput;
 };
@@ -837,6 +895,8 @@ export type Recipe = {
   instructions?: Maybe<Recipe_Instructions_Document>;
   name?: Maybe<Scalars['String']>;
   originalLink?: Maybe<Scalars['String']>;
+  tags?: Maybe<Array<Tag>>;
+  tagsCount?: Maybe<Scalars['Int']>;
 };
 
 
@@ -852,12 +912,26 @@ export type RecipeIngredientsCountArgs = {
   where?: IngredientWhereInput;
 };
 
+
+export type RecipeTagsArgs = {
+  orderBy?: Array<TagOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: TagWhereInput;
+};
+
+
+export type RecipeTagsCountArgs = {
+  where?: TagWhereInput;
+};
+
 export type RecipeCreateInput = {
   image?: InputMaybe<CloudImageRelateToOneForCreateInput>;
   ingredients?: InputMaybe<IngredientRelateToManyForCreateInput>;
   instructions?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   originalLink?: InputMaybe<Scalars['String']>;
+  tags?: InputMaybe<TagRelateToManyForCreateInput>;
 };
 
 export type RecipeManyRelationFilter = {
@@ -936,6 +1010,7 @@ export type RecipeUpdateInput = {
   instructions?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   originalLink?: InputMaybe<Scalars['String']>;
+  tags?: InputMaybe<TagRelateToManyForUpdateInput>;
 };
 
 export type RecipeWhereInput = {
@@ -947,6 +1022,7 @@ export type RecipeWhereInput = {
   ingredients?: InputMaybe<IngredientManyRelationFilter>;
   name?: InputMaybe<StringFilter>;
   originalLink?: InputMaybe<StringFilter>;
+  tags?: InputMaybe<TagManyRelationFilter>;
 };
 
 export type RecipeWhereUniqueInput = {
@@ -976,6 +1052,64 @@ export type StringFilter = {
   not?: InputMaybe<NestedStringFilter>;
   notIn?: InputMaybe<Array<Scalars['String']>>;
   startsWith?: InputMaybe<Scalars['String']>;
+};
+
+export type Tag = {
+  __typename?: 'Tag';
+  id: Scalars['ID'];
+  image?: Maybe<CloudImage>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type TagCreateInput = {
+  image?: InputMaybe<CloudImageRelateToOneForCreateInput>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type TagManyRelationFilter = {
+  every?: InputMaybe<TagWhereInput>;
+  none?: InputMaybe<TagWhereInput>;
+  some?: InputMaybe<TagWhereInput>;
+};
+
+export type TagOrderByInput = {
+  id?: InputMaybe<OrderDirection>;
+  name?: InputMaybe<OrderDirection>;
+};
+
+export type TagRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<TagWhereUniqueInput>>;
+  create?: InputMaybe<Array<TagCreateInput>>;
+};
+
+export type TagRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<TagWhereUniqueInput>>;
+  create?: InputMaybe<Array<TagCreateInput>>;
+  disconnect?: InputMaybe<Array<TagWhereUniqueInput>>;
+  set?: InputMaybe<Array<TagWhereUniqueInput>>;
+};
+
+export type TagUpdateArgs = {
+  data: TagUpdateInput;
+  where: TagWhereUniqueInput;
+};
+
+export type TagUpdateInput = {
+  image?: InputMaybe<CloudImageRelateToOneForUpdateInput>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type TagWhereInput = {
+  AND?: InputMaybe<Array<TagWhereInput>>;
+  NOT?: InputMaybe<Array<TagWhereInput>>;
+  OR?: InputMaybe<Array<TagWhereInput>>;
+  id?: InputMaybe<IdFilter>;
+  image?: InputMaybe<CloudImageWhereInput>;
+  name?: InputMaybe<StringFilter>;
+};
+
+export type TagWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type User = {
@@ -1083,14 +1217,14 @@ export type ToggleIngredientInListMutation = { __typename?: 'Mutation', updateIn
 export type GetAllRecipesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllRecipesQuery = { __typename?: 'Query', recipes?: Array<{ __typename?: 'Recipe', id: string, name?: string | null, originalLink?: string | null, ingredientsCount?: number | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null }> | null };
+export type GetAllRecipesQuery = { __typename?: 'Query', recipes?: Array<{ __typename?: 'Recipe', id: string, name?: string | null, originalLink?: string | null, ingredientsCount?: number | null, tags?: Array<{ __typename?: 'Tag', name?: string | null }> | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null }> | null };
 
 export type GetRecipeQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetRecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, name?: string | null, originalLink?: string | null, instructions?: { __typename?: 'Recipe_instructions_Document', document: any } | null, ingredients?: Array<{ __typename?: 'Ingredient', id: string, name?: string | null, status?: IngredientStatusType | null, key?: boolean | null, onShoppingList?: boolean | null, category?: { __typename?: 'Category', id: string, name?: string | null } | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null }> | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null } | null };
+export type GetRecipeQuery = { __typename?: 'Query', recipe?: { __typename?: 'Recipe', id: string, name?: string | null, originalLink?: string | null, instructions?: { __typename?: 'Recipe_instructions_Document', document: any } | null, tags?: Array<{ __typename?: 'Tag', name?: string | null }> | null, ingredients?: Array<{ __typename?: 'Ingredient', id: string, name?: string | null, status?: IngredientStatusType | null, key?: boolean | null, onShoppingList?: boolean | null, category?: { __typename?: 'Category', id: string, name?: string | null } | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null }> | null, image?: { __typename?: 'CloudImage', id: string, altText?: string | null, image?: { __typename?: 'CloudinaryImage_File', publicUrlTransformed?: string | null } | null } | null } | null };
 
 export type ShoppingListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1403,6 +1537,9 @@ export const GetAllRecipesDocument = gql`
     name
     originalLink
     ingredientsCount
+    tags {
+      name
+    }
     image {
       id
       image {
@@ -1448,6 +1585,9 @@ export const GetRecipeDocument = gql`
     originalLink
     instructions {
       document
+    }
+    tags {
+      name
     }
     ingredients {
       id
