@@ -12,6 +12,8 @@ import {
   Input,
   Stack,
   useToast,
+  Spinner,
+  Center,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { CURRENT_USER_QUERY } from '../auth/queries';
@@ -20,6 +22,7 @@ import {
   UserAuthenticationWithPasswordSuccess,
   UserAuthenticationWithPasswordFailure,
 } from '../../generated/graphql-types';
+import { useUser } from './Nav';
 
 type LoginModalProps = {
   isOpen: boolean;
@@ -31,6 +34,7 @@ export default function LoginModal({ isOpen }: LoginModalProps): JSX.Element {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { loading: getUserLoading } = useUser();
 
   const [signin, { data, loading }] = useSignInMutation({
     refetchQueries: [{ query: CURRENT_USER_QUERY }],
@@ -78,42 +82,50 @@ export default function LoginModal({ isOpen }: LoginModalProps): JSX.Element {
     <Modal isOpen={isOpen} onClose={() => null}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Sign In</ModalHeader>
-        <ModalBody>
-          <FormControl id="email">
-            <FormLabel color={'gray.500'}>Email address</FormLabel>
-            <Input
-              value={email}
-              onChange={onEmailChange}
-              name="email"
-              type="email"
-              focusBorderColor="yellow.500"
-            />
-          </FormControl>
-          <FormControl id="password">
-            <FormLabel color={'gray.500'}>Password</FormLabel>
-            <Input
-              value={password}
-              onChange={onPasswordChange}
-              focusBorderColor="yellow.500"
-              type="password"
-              name="password"
-              onKeyPress={(e) => (e.key === 'Enter' ? submitLogin() : undefined)}
-            />
-          </FormControl>
-          <Stack spacing={6}>
-            <FormLabel color={'red.500'}>
-              {
-                (data?.authenticateUserWithPassword as UserAuthenticationWithPasswordFailure)
-                  ?.message
-              }
-            </FormLabel>
-            <Button onClick={() => submitLogin()} isLoading={loading}>
-              Sign in
-            </Button>
-          </Stack>
-        </ModalBody>
-        <ModalFooter></ModalFooter>
+        {getUserLoading ? (
+          <Center mt="150px" mb="150px">
+            <Spinner color="yellow.500" marginLeft="auto" marginRight="auto" size="xl" />
+          </Center>
+        ) : (
+          <>
+            <ModalHeader>Sign In</ModalHeader>
+            <ModalBody>
+              <FormControl id="email">
+                <FormLabel color={'gray.500'}>Email address</FormLabel>
+                <Input
+                  value={email}
+                  onChange={onEmailChange}
+                  name="email"
+                  type="email"
+                  focusBorderColor="yellow.500"
+                />
+              </FormControl>
+              <FormControl id="password">
+                <FormLabel color={'gray.500'}>Password</FormLabel>
+                <Input
+                  value={password}
+                  onChange={onPasswordChange}
+                  focusBorderColor="yellow.500"
+                  type="password"
+                  name="password"
+                  onKeyPress={(e) => (e.key === 'Enter' ? submitLogin() : undefined)}
+                />
+              </FormControl>
+              <Stack spacing={6}>
+                <FormLabel color={'red.500'}>
+                  {
+                    (data?.authenticateUserWithPassword as UserAuthenticationWithPasswordFailure)
+                      ?.message
+                  }
+                </FormLabel>
+                <Button onClick={() => submitLogin()} isLoading={loading}>
+                  Sign in
+                </Button>
+              </Stack>
+            </ModalBody>
+            <ModalFooter></ModalFooter>
+          </>
+        )}
       </ModalContent>
     </Modal>
   );

@@ -18,16 +18,19 @@ import ButtonLink from '../ButtonLink';
 import LoginModal from './LoginModal';
 import { useCurrentUserQuery, AuthenticatedItem, User } from '../../generated/graphql-types';
 
-export function useUser(): Partial<AuthenticatedItem> | null | undefined {
-  const { data } = useCurrentUserQuery();
-  return data?.authenticatedItem as User;
+export function useUser(): {
+  user: Partial<AuthenticatedItem> | null | undefined;
+  loading: boolean;
+} {
+  const { data, loading } = useCurrentUserQuery();
+  return { user: data?.authenticatedItem as User, loading };
 }
 
 export default function Nav(): JSX.Element {
   const mobileNav = useDisclosure();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-  const user = useUser();
+  const { user } = useUser();
 
   useEffect(() => {
     setIsLoginModalOpen(!user);
