@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Box, Center, Spinner, Stack, Flex, Text, Collapse, Button } from '@chakra-ui/react';
+import { Box, Center, Spinner, Stack, Flex, Text, Collapse, Link, Button } from '@chakra-ui/react';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { DocumentRenderer } from '@keystone-6/document-renderer';
 import { useGetRecipeQuery } from '../generated/graphql-types';
 import IngredientCard from './IngredientCard';
@@ -33,8 +34,12 @@ export default function RecipeCard({ id }: RecipeCardProps): JSX.Element {
 
   return (
     <Stack maxWidth={2000} paddingLeft={4} paddingRight={4} paddingBottom={100}>
-      <Text fontSize="5xl">{recipe?.name}</Text>
-
+      <Flex alignItems="center" gap={2}>
+        <Text fontSize="5xl">{recipe?.name}</Text>
+        <Link href={recipe?.originalLink || ''} isExternal>
+          <ExternalLinkIcon mx="2px" color="red.500" />
+        </Link>
+      </Flex>
       <Button onClick={handleToggle}>
         {showIngredients ? 'Hide Ingredients' : 'Show Ingredients'}
       </Button>
