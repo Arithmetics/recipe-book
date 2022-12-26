@@ -33,10 +33,10 @@ export default function IngredientsByCategory({
         if (catIngredients?.length) {
           return (
             <>
-              <Text fontSize="2xl" marginLeft={8} marginTop={8}>
+              <Text fontSize="2xl" marginLeft={4} marginTop={8}>
                 {c.name}
               </Text>
-              <Flex margin={8} gap={4} wrap={'wrap'}>
+              <Flex margin={4} gap={4} wrap={'wrap'}>
                 {catIngredients?.map((i) => (
                   <IngredientCard key={i.id} ingredient={i} />
                 ))}

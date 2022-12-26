@@ -8,6 +8,7 @@ import {
   Button,
   Checkbox,
   useBreakpointValue,
+  Input,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import {
@@ -22,6 +23,8 @@ export default function AllIngredients(): JSX.Element {
     base: 'column',
     lg: 'row',
   });
+
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { data, loading } = useGetAllIngredientsQuery();
   const { data: categoryData, loading: loadingCategories } = useGetAllCategoriesQuery();
@@ -58,9 +61,14 @@ export default function AllIngredients(): JSX.Element {
     setKeyIngredientsOnly(!keyIngredientsOnly);
   };
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearchTerm(e.target.value);
+  };
+
   const resetFilters = (): void => {
     setCategoryId('');
     setStatus('');
+    setSearchTerm('');
   };
 
   const categoryFilterIngredients = categoryId
@@ -75,12 +83,24 @@ export default function AllIngredients(): JSX.Element {
     ? keyIngredientFilter?.filter((i) => i.status === status)
     : keyIngredientFilter;
 
+  const searchTermFilterIngredients = statusFilteredIngredients?.filter((s) =>
+    s.name?.toLocaleLowerCase().includes(searchTerm)
+  );
+
   return (
     <Box>
-      <Text marginLeft={8} marginTop={4} fontSize={'3xl'}>
+      <Text marginLeft={4} marginTop={4} fontSize={'3xl'}>
         Ingredients
       </Text>
-      <Flex gap={4} margin={8} wrap={'wrap'} flexDirection={flexDirection}>
+      <Input
+        placeholder="Search"
+        value={searchTerm}
+        onChange={handleSearch}
+        margin={4}
+        marginBottom={0}
+      />
+
+      <Flex gap={4} margin={4} wrap={'wrap'} flexDirection={flexDirection}>
         <Select
           placeholder="Filter Category"
           onChange={selectCategory}
@@ -107,12 +127,12 @@ export default function AllIngredients(): JSX.Element {
           Key Ingredients Only
         </Checkbox>
       </Flex>
-      <Button marginLeft={8} width={120} onClick={resetFilters}>
+      <Button marginLeft={4} width={120} onClick={resetFilters}>
         Reset Filters
       </Button>
       <IngredientsByCategory
         categories={categoryData?.categories}
-        ingredients={statusFilteredIngredients}
+        ingredients={searchTermFilterIngredients}
       />
     </Box>
   );

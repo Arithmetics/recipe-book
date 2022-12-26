@@ -16,7 +16,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
   return (
     <Stack
       onClick={handleClick}
-      width={'165px'}
+      width={'min(47%,165px)'}
       bg={'gray.600'}
       boxShadow={'2xl'}
       rounded={'md'}
