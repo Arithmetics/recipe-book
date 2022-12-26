@@ -69,12 +69,10 @@ export default function LoginModal({ isOpen }: LoginModalProps): JSX.Element {
   };
 
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(e);
     setEmail(e.target.value);
   };
 
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(e);
     setPassword(e.target.value);
   };
 

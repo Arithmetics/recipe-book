@@ -1,4 +1,5 @@
-import { Box, Flex, Center, Spinner, Text } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Box, Flex, Center, Spinner, Text, Input } from '@chakra-ui/react';
 import {
   useGetAllCategoriesQuery,
   useGetAllRecipesQuery,
@@ -6,12 +7,32 @@ import {
 } from '../generated/graphql-types';
 import RecipeCard from './RecipeCard';
 
+export interface PickerItem {
+  label: string;
+  value: string;
+}
+
 export default function AllIngredients(): JSX.Element {
+  const [searchTerm, setSearchTerm] = useState('');
+
   const { data, loading } = useGetAllRecipesQuery();
   const {
     //   data: categoryData,
     loading: loadingCategories,
   } = useGetAllCategoriesQuery();
+
+  // useEffect(() => {
+  //   if (!loading) {
+  //     const x =
+  //       data?.recipes?.map((r) => {
+  //         return {
+  //           label: r.name || '',
+  //           value: r.id,
+  //         };
+  //       }) || [];
+  //     setPickerItems(x);
+  //   }
+  // }, [loading, data?.recipes]);
 
   //   const [categoryId, setCategoryId] = useState<string>('');
   //   const [status, setStatus] = useState<IngredientStatusType | ''>('');
@@ -54,6 +75,14 @@ export default function AllIngredients(): JSX.Element {
   //     ? categoryFilterIngredients?.filter((i) => i.status === status)
   //     : categoryFilterIngredients;
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearchTerm(e.target.value);
+  };
+
+  const nonFilteredRecipes = data?.recipes?.filter((r) =>
+    r.name?.toLocaleLowerCase().includes(searchTerm)
+  );
+
   return (
     <Box>
       {/* <Flex gap={4} margin={8} wrap={'wrap'}>
@@ -76,11 +105,14 @@ export default function AllIngredients(): JSX.Element {
         </Select>
         <Button onClick={resetFilters}>Reset Filters</Button>
       </Flex> */}
-      <Text fontSize={'3xl'} marginLeft={8} marginTop={4}>
+      <Text fontSize={'3xl'} marginLeft={4} marginTop={4}>
         Recipes
       </Text>
-      <Flex margin={8} gap={4} wrap={'wrap'} justifyContent="center">
-        {data?.recipes?.map((recipe) => (
+      <Flex maxWidth={'800px'} margin={4} alignItems={'center'} gap={'40px'}>
+        <Input placeholder="Search" value={searchTerm} onChange={handleSearch} />
+      </Flex>
+      <Flex margin={4} gap={4} wrap={'wrap'}>
+        {nonFilteredRecipes?.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe as Recipe} />
         ))}
       </Flex>

@@ -76,7 +76,7 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
 
   return (
     <Stack
-      width={'120px'}
+      width={'103px'}
       bg={'gray.600'}
       boxShadow={'2xl'}
       rounded={'md'}

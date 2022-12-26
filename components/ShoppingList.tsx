@@ -10,8 +10,8 @@ export default function ShoppingList(): JSX.Element {
   if (loading || loadingCategories) {
     return (
       <Box>
-        <Text fontSize={'3xl'} marginLeft={8} marginTop={4}>
-          Recipes
+        <Text fontSize={'3xl'} marginLeft={4} marginTop={4}>
+          Shopping
         </Text>
         <Center marginTop={'30vh'}>
           <Spinner color="yellow.500" marginLeft="auto" marginRight="auto" size="xl" />
@@ -22,7 +22,7 @@ export default function ShoppingList(): JSX.Element {
 
   return (
     <Box>
-      <Text fontSize={'3xl'} marginLeft={8} marginTop={4}>
+      <Text fontSize={'3xl'} marginLeft={4} marginTop={4}>
         Shopping
       </Text>
       {!data?.ingredients?.length && (
