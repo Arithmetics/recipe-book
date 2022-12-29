@@ -98,6 +98,7 @@ export default function AllIngredients(): JSX.Element {
         onChange={handleSearch}
         margin={4}
         marginBottom={0}
+        maxWidth={'91%'}
       />
 
       <Flex gap={4} margin={4} wrap={'wrap'} flexDirection={flexDirection}>
