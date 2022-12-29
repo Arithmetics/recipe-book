@@ -80,7 +80,7 @@ export default function AllIngredients(): JSX.Element {
   };
 
   const nonFilteredRecipes = data?.recipes?.filter((r) =>
-    r.name?.toLocaleLowerCase().includes(searchTerm)
+    r.name?.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
   );
 
   return (

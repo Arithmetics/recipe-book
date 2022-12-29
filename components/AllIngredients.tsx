@@ -84,7 +84,7 @@ export default function AllIngredients(): JSX.Element {
     : keyIngredientFilter;
 
   const searchTermFilterIngredients = statusFilteredIngredients?.filter((s) =>
-    s.name?.toLocaleLowerCase().includes(searchTerm)
+    s.name?.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase())
   );
 
   return (
