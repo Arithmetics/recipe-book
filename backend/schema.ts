@@ -13,7 +13,7 @@ export const cloudinary = {
   folder: 'recipes',
 };
 
-function isSignedIn({ session }: { session: unknown }): boolean {
+function isSignedIn({ session }: { session?: unknown }): boolean {
   return !!session;
 }
 
