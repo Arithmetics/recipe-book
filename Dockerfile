@@ -1,5 +1,5 @@
 # --- Base Image (all other images are based off this one) ---------------------
-FROM node:15.14.0-alpine3.10 AS base
+FROM node:16.16.0-alpine3.16 AS base
 
 ARG DATABASE_URL
 ENV DATABASE_URL="$DATABASE_URL"
@@ -13,7 +13,7 @@ ARG CLOUDINARY_KEY
 ENV CLOUDINARY_KEY=$CLOUDINARY_KEY
 ARG CLOUDINARY_SECRET
 ENV CLOUDINARY_SECRET=$CLOUDINARY_SECRET
- 
+
 # Set working directory.
 WORKDIR /var/service
 
@@ -50,7 +50,7 @@ FROM base
 
 # Copy over everything we've built from the previous image.
 COPY --chown=node:node --from=builder /var/service /var/service
- 
+
 # Switch to the `node` user.
 USER node
 

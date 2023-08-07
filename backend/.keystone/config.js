@@ -242,9 +242,7 @@ var import_session = require("@keystone-6/core/session");
 var sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {
   if (process.env.NODE_ENV === "production") {
-    throw new Error(
-      "The SESSION_SECRET environment variable must be set in production"
-    );
+    throw new Error("The SESSION_SECRET environment variable must be set in production");
   } else {
     sessionSecret = "-- DEV COOKIE SECRET; CHANGE ME --";
   }
