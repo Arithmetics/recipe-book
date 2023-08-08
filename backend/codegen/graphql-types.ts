@@ -155,7 +155,7 @@ export type CloudinaryImageFormat = {
   opacity?: InputMaybe<Scalars['String']>;
   overlay?: InputMaybe<Scalars['String']>;
   page?: InputMaybe<Scalars['String']>;
-  /** Rewrites the filename to be this pretty string. Do not include `/` or `.` */
+  /**  Rewrites the filename to be this pretty string. Do not include `/` or `.` */
   prettyName?: InputMaybe<Scalars['String']>;
   quality?: InputMaybe<Scalars['String']>;
   radius?: InputMaybe<Scalars['String']>;
@@ -216,6 +216,7 @@ export type Ingredient = {
 
 
 export type IngredientRecipesArgs = {
+  cursor?: InputMaybe<RecipeWhereUniqueInput>;
   orderBy?: Array<RecipeOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -326,8 +327,6 @@ export type IntNullableFilter = {
 
 export type KeystoneAdminMeta = {
   __typename?: 'KeystoneAdminMeta';
-  enableSessionItem: Scalars['Boolean'];
-  enableSignout: Scalars['Boolean'];
   list?: Maybe<KeystoneAdminUiListMeta>;
   lists: Array<KeystoneAdminUiListMeta>;
 };
@@ -337,12 +336,21 @@ export type KeystoneAdminMetaListArgs = {
   key: Scalars['String'];
 };
 
+export type KeystoneAdminUiFieldGroupMeta = {
+  __typename?: 'KeystoneAdminUIFieldGroupMeta';
+  description?: Maybe<Scalars['String']>;
+  fields: Array<KeystoneAdminUiFieldMeta>;
+  label: Scalars['String'];
+};
+
 export type KeystoneAdminUiFieldMeta = {
   __typename?: 'KeystoneAdminUIFieldMeta';
   createView: KeystoneAdminUiFieldMetaCreateView;
   customViewsIndex?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']>;
   fieldMeta?: Maybe<Scalars['JSON']>;
   isFilterable: Scalars['Boolean'];
+  isNonNull?: Maybe<Array<KeystoneAdminUiFieldMetaIsNonNull>>;
   isOrderable: Scalars['Boolean'];
   itemView?: Maybe<KeystoneAdminUiFieldMetaItemView>;
   label: Scalars['String'];
@@ -367,15 +375,27 @@ export enum KeystoneAdminUiFieldMetaCreateViewFieldMode {
   Hidden = 'hidden'
 }
 
+export enum KeystoneAdminUiFieldMetaIsNonNull {
+  Create = 'create',
+  Read = 'read',
+  Update = 'update'
+}
+
 export type KeystoneAdminUiFieldMetaItemView = {
   __typename?: 'KeystoneAdminUIFieldMetaItemView';
   fieldMode?: Maybe<KeystoneAdminUiFieldMetaItemViewFieldMode>;
+  fieldPosition?: Maybe<KeystoneAdminUiFieldMetaItemViewFieldPosition>;
 };
 
 export enum KeystoneAdminUiFieldMetaItemViewFieldMode {
   Edit = 'edit',
   Hidden = 'hidden',
   Read = 'read'
+}
+
+export enum KeystoneAdminUiFieldMetaItemViewFieldPosition {
+  Form = 'form',
+  Sidebar = 'sidebar'
 }
 
 export type KeystoneAdminUiFieldMetaListView = {
@@ -392,11 +412,13 @@ export type KeystoneAdminUiListMeta = {
   __typename?: 'KeystoneAdminUIListMeta';
   description?: Maybe<Scalars['String']>;
   fields: Array<KeystoneAdminUiFieldMeta>;
+  groups: Array<KeystoneAdminUiFieldGroupMeta>;
   hideCreate: Scalars['Boolean'];
   hideDelete: Scalars['Boolean'];
   initialColumns: Array<Scalars['String']>;
   initialSort?: Maybe<KeystoneAdminUiSort>;
   isHidden: Scalars['Boolean'];
+  isSingleton: Scalars['Boolean'];
   itemQueryName: Scalars['String'];
   key: Scalars['String'];
   label: Scalars['String'];
@@ -754,6 +776,7 @@ export type Query = {
 
 
 export type QueryCategoriesArgs = {
+  cursor?: InputMaybe<CategoryWhereUniqueInput>;
   orderBy?: Array<CategoryOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -777,6 +800,7 @@ export type QueryCloudImageArgs = {
 
 
 export type QueryCloudImagesArgs = {
+  cursor?: InputMaybe<CloudImageWhereUniqueInput>;
   orderBy?: Array<CloudImageOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -795,6 +819,7 @@ export type QueryIngredientArgs = {
 
 
 export type QueryIngredientsArgs = {
+  cursor?: InputMaybe<IngredientWhereUniqueInput>;
   orderBy?: Array<IngredientOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -813,6 +838,7 @@ export type QueryRecipeArgs = {
 
 
 export type QueryRecipeToTriesArgs = {
+  cursor?: InputMaybe<RecipeToTryWhereUniqueInput>;
   orderBy?: Array<RecipeToTryOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -831,6 +857,7 @@ export type QueryRecipeToTryArgs = {
 
 
 export type QueryRecipesArgs = {
+  cursor?: InputMaybe<RecipeWhereUniqueInput>;
   orderBy?: Array<RecipeOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -849,6 +876,7 @@ export type QueryTagArgs = {
 
 
 export type QueryTagsArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
   orderBy?: Array<TagOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -867,6 +895,7 @@ export type QueryUserArgs = {
 
 
 export type QueryUsersArgs = {
+  cursor?: InputMaybe<UserWhereUniqueInput>;
   orderBy?: Array<UserOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -898,6 +927,7 @@ export type Recipe = {
 
 
 export type RecipeIngredientsArgs = {
+  cursor?: InputMaybe<IngredientWhereUniqueInput>;
   orderBy?: Array<IngredientOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -911,6 +941,7 @@ export type RecipeIngredientsCountArgs = {
 
 
 export type RecipeTagsArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
   orderBy?: Array<TagOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
