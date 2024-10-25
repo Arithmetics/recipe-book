@@ -128,6 +128,7 @@ export default function Nav(): JSX.Element {
                 href={'/recipes-to-try'}
                 buttonTheme={{ variant: 'ghost' }}
               />
+              <p>{user?.name}</p>
             </HStack>
             <HStack spacing={3} display={{ base: 'none', md: 'inline-flex' }}></HStack>
           </HStack>
