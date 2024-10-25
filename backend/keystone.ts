@@ -40,7 +40,6 @@ export default withAuth(
       provider: 'postgresql',
       url: `${process.env.DATABASE_URL}?pool_timeout=0`,
       enableLogging: true,
-      useMigrations: true,
       idField: { kind: 'uuid' },
     },
     // This config allows us to set up features of the Admin UI https://keystonejs.com/docs/apis/config#ui

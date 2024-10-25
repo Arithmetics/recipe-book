@@ -3,7 +3,7 @@ import { list } from '@keystone-6/core';
 import { text, relationship, password, select, checkbox, integer } from '@keystone-6/core/fields';
 import { cloudinaryImage } from '@keystone-6/cloudinary';
 import { document } from '@keystone-6/fields-document';
-import { Lists } from '.keystone/types';
+// import { Lists } from '.keystone/types';
 import 'dotenv/config';
 
 export const cloudinary = {
@@ -17,7 +17,7 @@ function isSignedIn({ session }: { session?: unknown }): boolean {
   return !!session;
 }
 
-export const lists: Lists = {
+export const lists = {
   User: list({
     access: {
       operation: {
