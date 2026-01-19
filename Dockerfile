@@ -1,5 +1,5 @@
 # --- Base Image (all other images are based off this one) ---------------------
-FROM node:20.18.0-alpine AS base
+FROM node:22.12.0-alpine AS base
 
 ARG DATABASE_URL
 ENV DATABASE_URL="$DATABASE_URL"
