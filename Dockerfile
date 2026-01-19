@@ -20,6 +20,9 @@ WORKDIR /var/service
 # Perform an upgrade to get all the latest security updates
 RUN apk upgrade --no-cache
 
+# Install OpenSSL 1.1 compatibility for Prisma
+RUN apk add --no-cache openssl1.1-compat openssl
+
 # --- Setup Stage (image contains NPM credentials, should not be pushed) -------
 FROM base AS setup
 
