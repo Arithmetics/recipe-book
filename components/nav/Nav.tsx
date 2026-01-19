@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import {
   chakra,
   Box,
@@ -15,7 +14,6 @@ import { MdOutlineIntegrationInstructions, MdOutlineFoodBank } from 'react-icons
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { GiMeat } from 'react-icons/gi';
 import ButtonLink from '../ButtonLink';
-import LoginModal from './LoginModal';
 import { useCurrentUserQuery, AuthenticatedItem, User } from '../../generated/graphql-types';
 
 export function useUser(): {
@@ -28,17 +26,9 @@ export function useUser(): {
 
 export default function Nav(): JSX.Element {
   const mobileNav = useDisclosure();
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-
-  const { user } = useUser();
-
-  useEffect(() => {
-    setIsLoginModalOpen(!user);
-  }, [user]);
 
   return (
     <>
-      <LoginModal isOpen={isLoginModalOpen} />
       <chakra.header bg="gray.900" w="full" px={{ base: 2, sm: 4 }} py={4} shadow="md">
         <Flex alignItems="center" justifyContent="space-between" mx="auto">
           <HStack display="flex" spacing={3} alignItems="center">
@@ -128,7 +118,6 @@ export default function Nav(): JSX.Element {
                 href={'/recipes-to-try'}
                 buttonTheme={{ variant: 'ghost' }}
               />
-              <p>{user?.name}</p>
             </HStack>
             <HStack spacing={3} display={{ base: 'none', md: 'inline-flex' }}></HStack>
           </HStack>
