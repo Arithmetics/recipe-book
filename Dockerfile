@@ -20,7 +20,7 @@ WORKDIR /var/service
 # Perform an upgrade to get all the latest security updates
 RUN apk upgrade --no-cache
 
-# Install OpenSSL 3.0 libraries for Prisma 7.x on Alpine 3.21
+# Install OpenSSL 3.0 libraries for Prisma 5.22.0 on Alpine 3.21
 # Note: openssl is already included in base image, but we ensure libssl3 and libcrypto3 are present
 RUN apk add --no-cache libssl3 libcrypto3
 
@@ -40,10 +40,6 @@ COPY backend/ ./
 
 # Install all dev dependencies (used to build typescript, for docker-compose, etc)
 RUN npm install
-
-# Ensure Prisma generates binaries compatible with Alpine + OpenSSL 3.0
-# Remove any existing Prisma binaries to force regeneration with correct OpenSSL version
-RUN rm -rf node_modules/.prisma/client && npx prisma generate
 
 # --- Build Stage (image contains NPM credentials, should not be pushed) -------
 FROM setup AS builder
