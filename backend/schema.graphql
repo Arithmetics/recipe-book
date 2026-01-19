@@ -617,26 +617,26 @@ input CreateInitialUserInput {
 }
 
 type Query {
-  users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   usersCount(where: UserWhereInput! = {}): Int
-  ingredients(where: IngredientWhereInput! = {}, orderBy: [IngredientOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: IngredientWhereUniqueInput): [Ingredient!]
   ingredient(where: IngredientWhereUniqueInput!): Ingredient
+  ingredients(where: IngredientWhereInput! = {}, orderBy: [IngredientOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: IngredientWhereUniqueInput): [Ingredient!]
   ingredientsCount(where: IngredientWhereInput! = {}): Int
-  categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
   category(where: CategoryWhereUniqueInput!): Category
+  categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
   categoriesCount(where: CategoryWhereInput! = {}): Int
-  recipes(where: RecipeWhereInput! = {}, orderBy: [RecipeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: RecipeWhereUniqueInput): [Recipe!]
   recipe(where: RecipeWhereUniqueInput!): Recipe
+  recipes(where: RecipeWhereInput! = {}, orderBy: [RecipeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: RecipeWhereUniqueInput): [Recipe!]
   recipesCount(where: RecipeWhereInput! = {}): Int
-  cloudImages(where: CloudImageWhereInput! = {}, orderBy: [CloudImageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CloudImageWhereUniqueInput): [CloudImage!]
   cloudImage(where: CloudImageWhereUniqueInput!): CloudImage
+  cloudImages(where: CloudImageWhereInput! = {}, orderBy: [CloudImageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CloudImageWhereUniqueInput): [CloudImage!]
   cloudImagesCount(where: CloudImageWhereInput! = {}): Int
-  recipeToTries(where: RecipeToTryWhereInput! = {}, orderBy: [RecipeToTryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: RecipeToTryWhereUniqueInput): [RecipeToTry!]
   recipeToTry(where: RecipeToTryWhereUniqueInput!): RecipeToTry
+  recipeToTries(where: RecipeToTryWhereInput! = {}, orderBy: [RecipeToTryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: RecipeToTryWhereUniqueInput): [RecipeToTry!]
   recipeToTriesCount(where: RecipeToTryWhereInput! = {}): Int
-  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tag(where: TagWhereUniqueInput!): Tag
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
@@ -655,23 +655,25 @@ type KeystoneAdminMeta {
 
 type KeystoneAdminUIListMeta {
   key: String!
-  itemQueryName: String!
-  listQueryName: String!
-  hideCreate: Boolean!
-  hideDelete: Boolean!
   path: String!
   label: String!
   singular: String!
   plural: String!
   description: String
-  initialColumns: [String!]!
   pageSize: Int!
   labelField: String!
   fields: [KeystoneAdminUIFieldMeta!]!
   groups: [KeystoneAdminUIFieldGroupMeta!]!
+  graphql: KeystoneAdminUIGraphQL!
+  initialColumns: [String!]!
+  initialSearchFields: [String!]!
   initialSort: KeystoneAdminUISort
-  isHidden: Boolean!
   isSingleton: Boolean!
+  hideCreate: Boolean!
+  hideDelete: Boolean!
+  isHidden: Boolean!
+  itemQueryName: String!
+  listQueryName: String!
 }
 
 type KeystoneAdminUIFieldMeta {
@@ -734,6 +736,33 @@ type KeystoneAdminUIFieldGroupMeta {
   label: String!
   description: String
   fields: [KeystoneAdminUIFieldMeta!]!
+}
+
+type KeystoneAdminUIGraphQL {
+  names: KeystoneAdminUIGraphQLNames!
+}
+
+type KeystoneAdminUIGraphQLNames {
+  outputTypeName: String!
+  whereInputName: String!
+  whereUniqueInputName: String!
+  createInputName: String!
+  createMutationName: String!
+  createManyMutationName: String!
+  relateToOneForCreateInputName: String!
+  relateToManyForCreateInputName: String!
+  itemQueryName: String!
+  listOrderName: String!
+  listQueryCountName: String!
+  listQueryName: String!
+  updateInputName: String!
+  updateMutationName: String!
+  updateManyInputName: String!
+  updateManyMutationName: String!
+  relateToOneForUpdateInputName: String!
+  relateToManyForUpdateInputName: String!
+  deleteMutationName: String!
+  deleteManyMutationName: String!
 }
 
 type KeystoneAdminUISort {
