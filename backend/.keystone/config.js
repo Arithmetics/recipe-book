@@ -274,7 +274,6 @@ var keystone_default = auth.withAuth(
       provider: "postgresql",
       url: `${process.env.DATABASE_URL}?pool_timeout=0`,
       enableLogging: true,
-      useMigrations: true,
       idField: { kind: "uuid" }
     },
     ui: {
