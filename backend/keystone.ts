@@ -1,18 +1,31 @@
-/*
-Welcome to Keystone! This file is what keystone uses to start the app.
-
-It looks at the default export, and expects a Keystone config object.
-
-You can find all the config options in our docs here: https://keystonejs.com/docs/apis/config
-*/
-
+import { statelessSessions } from '@keystone-6/core/session';
+import { createAuth } from '@keystone-6/auth';
 import { config } from '@keystone-6/core';
+import 'dotenv/config';
 
-// Look in the schema file for how we define our lists, and how users interact with them through graphql or the Admin UI
 import { lists } from './schema';
 
-// Keystone auth is configured separately - check out the basic auth setup we are importing from our auth file.
-import { withAuth, session } from './auth';
+let sessionSecret = process.env.SESSION_SECRET;
+
+if (!sessionSecret) {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('The SESSION_SECRET environment variable must be set in production');
+  } else {
+    sessionSecret = '-- DEV COOKIE SECRET; CHANGE ME --';
+  }
+}
+
+const sessionMaxAge = 60 * 60 * 24 * 30; // 30 days
+
+const auth = createAuth({
+  listKey: 'User',
+  identityField: 'email',
+  secretField: 'password',
+  sessionData: 'id',
+  initFirstItem: {
+    fields: ['name', 'email', 'password'],
+  },
+});
 
 const frontendUrl = process.env.FRONTEND_URL;
 
@@ -20,19 +33,11 @@ if (!frontendUrl) {
   throw new Error(`Where's your FRONTEND_URL dude`);
 }
 
-export default withAuth(
-  // Using the config function helps typescript guide you to the available options.
+export default auth.withAuth(
   config({
-    // the db sets the database provider - we're using sqlite for the fastest startup experience
-    graphql: {
-      cors: {
-        origin: frontendUrl,
-        credentials: true,
-      },
-    },
     server: {
       cors: {
-        origin: frontendUrl,
+        origin: [frontendUrl],
         credentials: true,
       },
     },
@@ -40,15 +45,15 @@ export default withAuth(
       provider: 'postgresql',
       url: `${process.env.DATABASE_URL}?pool_timeout=0`,
       enableLogging: true,
-      useMigrations: true,
       idField: { kind: 'uuid' },
     },
-    // This config allows us to set up features of the Admin UI https://keystonejs.com/docs/apis/config#ui
     ui: {
-      // For our starter, we check that someone has session data before letting them see the Admin UI.
       isAccessAllowed: (context) => !!context.session?.data,
     },
     lists,
-    session,
+    session: statelessSessions({
+      maxAge: sessionMaxAge,
+      secret: sessionSecret,
+    }),
   })
 );

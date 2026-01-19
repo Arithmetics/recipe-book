@@ -1,6 +1,6 @@
 overwrite: true
 schema: 'backend/schema.graphql'
-documents: '{components,pages}/**/*.{ts,tsx}'
+documents: '{components,lib,pages}/**/*.{ts,tsx}'
 generates:
   generated/graphql-types.ts:
     config:

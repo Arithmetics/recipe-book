@@ -1,3 +1,4 @@
+import React from 'react';
 import { DocumentRendererProps } from '@keystone-6/document-renderer';
 import { Text, UnorderedList, ListItem, OrderedList } from '@chakra-ui/react';
 
@@ -6,32 +7,40 @@ export const renderers: DocumentRendererProps['renderers'] = {
   block: {
     paragraph: ({ children, textAlign }) => {
       return (
-        <Text fontSize="md" style={{ textAlign }}>
+        <Text
+          fontSize="md"
+          style={{ textAlign: textAlign as 'left' | 'right' | 'center' | 'justify' | undefined }}
+        >
           {children}
         </Text>
       );
     },
     heading: ({ children, textAlign }) => {
       return (
-        <Text fontSize="3xl" style={{ textAlign }}>
+        <Text
+          fontSize="3xl"
+          style={{ textAlign: textAlign as 'left' | 'right' | 'center' | 'justify' | undefined }}
+        >
           {children}
         </Text>
       );
     },
     list: ({ children, type }) => {
       if (type === 'ordered') {
-        <OrderedList>
-          {children.map((c) => (
-            <ListItem color={'yellow.500'} key={c.key}>
-              {c}
-            </ListItem>
-          ))}
-        </OrderedList>;
+        return (
+          <OrderedList>
+            {children.map((c, index) => (
+              <ListItem color={'yellow.500'} key={c.key ?? index}>
+                {c}
+              </ListItem>
+            ))}
+          </OrderedList>
+        );
       }
       return (
         <UnorderedList>
-          {children.map((c) => (
-            <ListItem color={'yellow.500'} key={c.key}>
+          {children.map((c, index) => (
+            <ListItem color={'yellow.500'} key={c.key ?? index}>
               {c}
             </ListItem>
           ))}

@@ -23,7 +23,10 @@ __export(keystone_exports, {
   default: () => keystone_default
 });
 module.exports = __toCommonJS(keystone_exports);
+var import_session = require("@keystone-6/core/session");
+var import_auth = require("@keystone-6/auth");
 var import_core2 = require("@keystone-6/core");
+var import_config2 = require("dotenv/config");
 
 // schema.ts
 var import_core = require("@keystone-6/core");
@@ -37,8 +40,8 @@ var cloudinary = {
   apiSecret: process.env.CLOUDINARY_SECRET || "",
   folder: "recipes"
 };
-function isSignedIn({ session: session2 }) {
-  return !!session2;
+function isSignedIn({ session }) {
+  return !!session;
 }
 var lists = {
   User: (0, import_core.list)({
@@ -236,9 +239,7 @@ var lists = {
   })
 };
 
-// auth.ts
-var import_auth = require("@keystone-6/auth");
-var import_session = require("@keystone-6/core/session");
+// keystone.ts
 var sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {
   if (process.env.NODE_ENV === "production") {
@@ -247,39 +248,25 @@ if (!sessionSecret) {
     sessionSecret = "-- DEV COOKIE SECRET; CHANGE ME --";
   }
 }
-var { withAuth } = (0, import_auth.createAuth)({
+var sessionMaxAge = 60 * 60 * 24 * 30;
+var auth = (0, import_auth.createAuth)({
   listKey: "User",
   identityField: "email",
-  sessionData: "name",
   secretField: "password",
+  sessionData: "id",
   initFirstItem: {
     fields: ["name", "email", "password"]
   }
 });
-var sessionMaxAge = 60 * 60 * 24 * 30;
-var session = (0, import_session.statelessSessions)({
-  maxAge: sessionMaxAge,
-  secret: sessionSecret
-});
-
-// keystone.ts
 var frontendUrl = process.env.FRONTEND_URL;
 if (!frontendUrl) {
   throw new Error(`Where's your FRONTEND_URL dude`);
 }
-var keystone_default = withAuth(
-  // Using the config function helps typescript guide you to the available options.
+var keystone_default = auth.withAuth(
   (0, import_core2.config)({
-    // the db sets the database provider - we're using sqlite for the fastest startup experience
-    graphql: {
-      cors: {
-        origin: frontendUrl,
-        credentials: true
-      }
-    },
     server: {
       cors: {
-        origin: frontendUrl,
+        origin: [frontendUrl],
         credentials: true
       }
     },
@@ -290,12 +277,14 @@ var keystone_default = withAuth(
       useMigrations: true,
       idField: { kind: "uuid" }
     },
-    // This config allows us to set up features of the Admin UI https://keystonejs.com/docs/apis/config#ui
     ui: {
-      // For our starter, we check that someone has session data before letting them see the Admin UI.
       isAccessAllowed: (context) => !!context.session?.data
     },
     lists,
-    session
+    session: (0, import_session.statelessSessions)({
+      maxAge: sessionMaxAge,
+      secret: sessionSecret
+    })
   })
 );
+//# sourceMappingURL=config.js.map
