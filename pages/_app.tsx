@@ -13,7 +13,13 @@ import { ParsedUrlQuery } from 'node:querystring';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
+Router.events.on('routeChangeError', (err) => {
+  NProgress.done();
+  // "Cancel rendering route" can occur in prod when navigation races; avoid surfacing to user
+  if (err?.message !== 'Cancel rendering route') {
+    console.error('Route change error:', err);
+  }
+});
 
 class App extends NextApp {
   render(): JSX.Element {

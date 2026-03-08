@@ -23,7 +23,7 @@ export default function ButtonLink({
   return (
     <NextLink href={href} passHref legacyBehavior>
       <Button variant={variant} className={cn(layoutProps?.w === 'full' && 'w-full')} asChild>
-        <a>
+        <a href={href}>
           {leftIcon}
           {title}
         </a>
