@@ -1,17 +1,10 @@
-import { Flex, Text, Divider } from '@chakra-ui/react';
 import { Category, Ingredient } from '../generated/graphql-types';
 import IngredientCard from './IngredientCard';
 
 function byOrder(a: Category, b: Category): number {
-  if (!a.order) {
-    return 1;
-  }
-  if (!b.order) {
-    return -1;
-  }
-  if (a.order > b.order) {
-    return -1;
-  }
+  if (!a.order) return 1;
+  if (!b.order) return -1;
+  if (a.order > b.order) return -1;
   return 1;
 }
 
@@ -29,22 +22,18 @@ export default function IngredientsByCategory({
     <>
       {sorted.map((c) => {
         const catIngredients = ingredients?.filter((i) => i?.category?.id === c.id);
-
-        if (catIngredients?.length) {
-          return (
-            <>
-              <Text fontSize="2xl" marginLeft={4} marginTop={8}>
-                {c.name}
-              </Text>
-              <Flex margin={4} gap={4} wrap={'wrap'}>
-                {catIngredients?.map((i) => (
-                  <IngredientCard key={i.id} ingredient={i} />
-                ))}
-              </Flex>
-              <Divider />
-            </>
-          );
-        }
+        if (!catIngredients?.length) return null;
+        return (
+          <div key={c.id}>
+            <h3 className="ml-4 mt-8 text-2xl font-semibold">{c.name}</h3>
+            <div className="mx-4 mt-4 flex flex-wrap gap-4">
+              {catIngredients.map((i) => (
+                <IngredientCard key={i.id} ingredient={i} />
+              ))}
+            </div>
+            <hr className="my-4 border-border" />
+          </div>
+        );
       })}
     </>
   );

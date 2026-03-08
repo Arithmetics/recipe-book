@@ -1,13 +1,13 @@
 import NextApp, { AppInitialProps } from 'next/app';
-import { ChakraProvider } from '@chakra-ui/react';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import { ApolloProvider } from '@apollo/client';
+import { Toaster } from 'sonner';
 
+import '../styles/globals.css';
 import '../components/nprogress.css';
 
 import Page from '../components/Page';
-import theme from '../theme';
 import withData from '../lib/withData';
 import { ParsedUrlQuery } from 'node:querystring';
 
@@ -22,11 +22,10 @@ class App extends NextApp {
     const { Component, pageProps, apollo } = this.props;
     return (
       <ApolloProvider client={apollo}>
-        <ChakraProvider theme={theme}>
-          <Page>
-            <Component {...pageProps} />
-          </Page>
-        </ChakraProvider>
+        <Page>
+          <Component {...pageProps} />
+        </Page>
+        <Toaster richColors position="top-right" />
       </ApolloProvider>
     );
   }

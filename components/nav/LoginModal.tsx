@@ -1,21 +1,6 @@
 import { useState } from 'react';
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Stack,
-  useToast,
-  Spinner,
-  Center,
-} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { toast } from 'sonner';
 import { CURRENT_USER_QUERY } from '../auth/queries';
 import {
   useSignInMutation,
@@ -23,6 +8,16 @@ import {
   UserAuthenticationWithPasswordFailure,
 } from '../../generated/graphql-types';
 import { useUser } from './Nav';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 type LoginModalProps = {
   isOpen: boolean;
@@ -30,8 +25,6 @@ type LoginModalProps = {
 
 export default function LoginModal({ isOpen }: LoginModalProps): JSX.Element {
   const router = useRouter();
-  const toast = useToast();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { loading: getUserLoading } = useUser();
@@ -47,84 +40,72 @@ export default function LoginModal({ isOpen }: LoginModalProps): JSX.Element {
       });
 
       if ((res.data?.authenticateUserWithPassword as UserAuthenticationWithPasswordSuccess)?.item) {
-        toast({
-          title: 'Signed in',
-          description: 'Welcome back',
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-        });
+        toast.success('Signed in', { description: 'Welcome back' });
         router.push('/');
       }
-    } catch (e) {
-      toast({
-        title: 'Error',
+    } catch {
+      toast.error('Error', {
         description:
-          'There was an error on the backend. Try again and then Email Brock if it percists',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
+          'There was an error on the backend. Try again and then Email Brock if it persists',
       });
     }
   };
 
-  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setEmail(e.target.value);
-  };
-
-  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setPassword(e.target.value);
-  };
-
   return (
-    <Modal isOpen={isOpen} onClose={() => null}>
-      <ModalOverlay />
-      <ModalContent>
+    <Dialog open={isOpen} onOpenChange={() => undefined}>
+      <DialogContent className="sm:max-w-md">
         {getUserLoading ? (
-          <Center mt="150px" mb="150px">
-            <Spinner color="yellow.500" marginLeft="auto" marginRight="auto" size="xl" />
-          </Center>
+          <div className="flex justify-center py-24">
+            <div className="size-10 animate-spin rounded-full border-2 border-border border-t-main" />
+          </div>
         ) : (
           <>
-            <ModalHeader>Sign In</ModalHeader>
-            <ModalBody>
-              <FormControl id="email">
-                <FormLabel color={'gray.500'}>Email address</FormLabel>
+            <DialogHeader>
+              <DialogTitle>Sign In</DialogTitle>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="email" className="text-muted-foreground">
+                  Email address
+                </Label>
                 <Input
-                  value={email}
-                  onChange={onEmailChange}
-                  name="email"
+                  id="email"
                   type="email"
-                  focusBorderColor="yellow.500"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
                 />
-              </FormControl>
-              <FormControl id="password">
-                <FormLabel color={'gray.500'}>Password</FormLabel>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="password" className="text-muted-foreground">
+                  Password
+                </Label>
                 <Input
-                  value={password}
-                  onChange={onPasswordChange}
-                  focusBorderColor="yellow.500"
+                  id="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   name="password"
-                  onKeyPress={(e) => (e.key === 'Enter' ? submitLogin() : undefined)}
+                  onKeyDown={(e) => (e.key === 'Enter' ? submitLogin() : undefined)}
                 />
-              </FormControl>
-              <Stack spacing={6}>
-                <FormLabel color={'red.500'}>
+              </div>
+              {(data?.authenticateUserWithPassword as UserAuthenticationWithPasswordFailure)
+                ?.message && (
+                <p className="text-sm text-destructive">
                   {
                     (data?.authenticateUserWithPassword as UserAuthenticationWithPasswordFailure)
-                      ?.message
+                      .message
                   }
-                </FormLabel>
-                <Button onClick={() => submitLogin()} isLoading={loading}>
-                  Sign in
-                </Button>
-              </Stack>
-            </ModalBody>
-            <ModalFooter></ModalFooter>
+                </p>
+              )}
+              <Button onClick={() => submitLogin()} disabled={loading}>
+                {loading ? 'Signing in…' : 'Sign in'}
+              </Button>
+            </div>
+            <DialogFooter />
           </>
         )}
-      </ModalContent>
-    </Modal>
+      </DialogContent>
+    </Dialog>
   );
 }
