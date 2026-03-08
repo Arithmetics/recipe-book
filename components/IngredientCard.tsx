@@ -1,28 +1,56 @@
-import { toast } from 'sonner';
+import { Checkbox, Image, Progress, Stack, Text, useToast } from '@chakra-ui/react';
 import {
   Ingredient,
   IngredientStatusType,
   useToggleIngredientInListMutation,
   useUpdateIngredientStatusMutation,
 } from '../generated/graphql-types';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Progress } from '@/components/ui/progress';
-import { Label } from '@/components/ui/label';
 
 type IngredientCardProps = {
   ingredient: Ingredient;
 };
 
-function progressValue(status?: IngredientStatusType | null): number {
-  if (status === IngredientStatusType.Good) return 100;
-  if (status === IngredientStatusType.Low) return 50;
-  return 10;
+function progress(status?: IngredientStatusType | null): { value: number; colorScheme: string } {
+  if (status === IngredientStatusType.Good) {
+    return {
+      value: 100,
+      colorScheme: 'green',
+    };
+  }
+  if (status === IngredientStatusType.Low) {
+    return {
+      value: 50,
+      colorScheme: 'yellow',
+    };
+  }
+  if (status === IngredientStatusType.Out) {
+    return {
+      value: 10,
+      colorScheme: 'red',
+    };
+  }
+  return {
+    value: 10,
+    colorScheme: 'red',
+  };
 }
 
 export default function IngredientCard({ ingredient }: IngredientCardProps): JSX.Element {
+  const toast = useToast();
   const [updateIngredient] = useUpdateIngredientStatusMutation();
+
   const [toggleIngredientInListMutation] = useToggleIngredientInListMutation();
-  const value = progressValue(ingredient.status);
+
+  const { value, colorScheme } = progress(ingredient.status);
+
+  const toggleIngredientOnShoppingList = (): void => {
+    toggleIngredientInListMutation({
+      variables: {
+        id: ingredient.id,
+        onList: !ingredient.onShoppingList,
+      },
+    });
+  };
 
   const handleClick = (): void => {
     try {
@@ -35,43 +63,60 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
       if (ingredient.status === IngredientStatusType.Good) {
         updateIngredient({ variables: { status: IngredientStatusType.Low, id: ingredient.id } });
       }
-    } catch {
-      toast.error('Ingredient Update fail');
+    } catch (e) {
+      toast({
+        title: 'Error',
+        description: 'Ingredient Update fail',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
   return (
-    <div className="relative w-[103px] overflow-hidden rounded-base border-2 border-border bg-card p-2 shadow-shadow transition-transform duration-300 hover:scale-105">
-      <p className="h-10 w-[105px] overflow-hidden text-ellipsis text-sm">{ingredient.name}</p>
-      <button
-        type="button"
-        onClick={handleClick}
-        className="block border-0 bg-transparent p-0"
-        aria-label={`Cycle status for ${ingredient.name}`}
+    <Stack
+      width={'103px'}
+      bg={'gray.600'}
+      boxShadow={'2xl'}
+      rounded={'md'}
+      overflow={'hidden'}
+      position={'relative'}
+      padding={2}
+      transition="all 0.5s"
+      _hover={{
+        transform: 'scale(1.05)',
+      }}
+    >
+      <Text
+        fontSize="sm"
+        width={'105px'}
+        text-overflow="ellipsis"
+        overflow="hidden"
+        height={'40px'}
       >
-        <img
-          src={ingredient.image?.image?.publicUrlTransformed || ''}
-          alt=""
-          className="h-[100px] w-[120px] cursor-pointer object-cover object-top"
-        />
-      </button>
-      <Progress value={value} className="mt-1" />
+        {ingredient.name}
+      </Text>
+      <Image
+        h={'100px'}
+        w={'120px'}
+        src={ingredient.image?.image?.publicUrlTransformed || ''}
+        objectFit={'cover'}
+        objectPosition={'top'}
+        cursor="pointer"
+        onClick={handleClick}
+      />
+      <Progress isAnimated colorScheme={colorScheme} size="sm" value={value} />
       {!ingredient.key && (
-        <div className="mt-2 flex items-center space-x-2">
-          <Checkbox
-            id={`list-${ingredient.id}`}
-            checked={ingredient.onShoppingList || false}
-            onCheckedChange={(checked) =>
-              toggleIngredientInListMutation({
-                variables: { id: ingredient.id, onList: checked === true },
-              })
-            }
-          />
-          <Label htmlFor={`list-${ingredient.id}`} className="text-xs">
-            On list
-          </Label>
-        </div>
+        <Checkbox
+          size="md"
+          colorScheme="yellow"
+          isChecked={ingredient.onShoppingList || false}
+          onChange={toggleIngredientOnShoppingList}
+        >
+          On list
+        </Checkbox>
       )}
-    </div>
+    </Stack>
   );
 }
