@@ -1,9 +1,8 @@
 import Recipe from '../../components/Recipe';
 
-type RecipePageProps = {
+type IngredientsPageProps = {
   query: { id?: string };
 };
-
-export default function RecipePage({ query }: RecipePageProps): JSX.Element {
-  return <Recipe id={query?.id} />;
+export default function IngredientsPage({ query }: IngredientsPageProps): JSX.Element {
+  return <Recipe id={query.id} />;
 }
