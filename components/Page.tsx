@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import Nav from './nav/Nav';
 
 interface PageProps {
@@ -8,7 +9,7 @@ export default function Page({ children }: PageProps): JSX.Element {
   return (
     <div>
       <Nav />
-      <main>{children}</main>
+      <Box>{children}</Box>
     </div>
   );
 }
