@@ -24,6 +24,8 @@
     "node-cron": "3.0.3",
     "nodemailer": "6.10.0",
     "resend": "4.0.0",
+    "slate": "0.123.0",
+    "slate-react": "0.123.0",
     "typescript": "5.7.3"
   },
   "devDependencies": {
