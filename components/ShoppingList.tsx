@@ -1,6 +1,4 @@
-import { Box, Center, Spinner, Text } from '@chakra-ui/react';
 import { useGetAllCategoriesQuery, useShoppingListQuery } from '../generated/graphql-types';
-
 import IngredientsByCategory from './IngredientsByCategory';
 
 export default function ShoppingList(): JSX.Element {
@@ -9,31 +7,27 @@ export default function ShoppingList(): JSX.Element {
 
   if (loading || loadingCategories) {
     return (
-      <Box>
-        <Text fontSize={'3xl'} marginLeft={4} marginTop={4}>
-          Shopping
-        </Text>
-        <Center marginTop={'30vh'}>
-          <Spinner color="yellow.500" marginLeft="auto" marginRight="auto" size="xl" />
-        </Center>
-      </Box>
+      <div>
+        <h2 className="ml-4 mt-4 text-3xl font-bold">Shopping</h2>
+        <div className="flex justify-center pt-[30vh]">
+          <div className="size-10 animate-spin rounded-full border-2 border-border border-t-main" />
+        </div>
+      </div>
     );
   }
 
   return (
-    <Box>
-      <Text fontSize={'3xl'} marginLeft={4} marginTop={4}>
-        Shopping
-      </Text>
+    <div>
+      <h2 className="ml-4 mt-4 text-3xl font-bold">Shopping</h2>
       {!data?.ingredients?.length && (
-        <Center marginTop={'30vh'}>
-          <Text color="yellow.500">No items on list</Text>
-        </Center>
+        <div className="flex justify-center pt-[30vh]">
+          <p className="text-main">No items on list</p>
+        </div>
       )}
       <IngredientsByCategory
         categories={categoryData?.categories}
         ingredients={data?.ingredients}
       />
-    </Box>
+    </div>
   );
 }

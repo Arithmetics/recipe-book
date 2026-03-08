@@ -1,51 +1,40 @@
-import { useRouter } from 'next/router';
-import { Flex, Image, Stack, Tag, TagLabel, Text } from '@chakra-ui/react';
+import Link from 'next/link';
 import { Recipe } from '../generated/graphql-types';
+import { Badge } from '@/components/ui/badge';
 
 type RecipeCardProps = {
   recipe: Recipe;
 };
 
-export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
-  const router = useRouter();
+const cardClassName =
+  'relative block w-[min(47%,165px)] cursor-pointer overflow-hidden rounded-base border-2 border-border bg-card p-2 shadow-shadow transition-all duration-300 hover:scale-105';
 
-  const handleClick = (): void => {
-    router.push(`/recipes/${recipe.id}`);
-  };
+export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
+  const content = (
+    <>
+      <p className="text-sm font-base">{recipe.name}</p>
+      <img
+        src={recipe.image?.image?.publicUrlTransformed || ''}
+        alt=""
+        className="h-[150px] w-[150px] object-cover object-top"
+      />
+      <div className="mt-1 flex flex-wrap gap-1">
+        {recipe.tags?.map((tag) => (
+          <Badge key={tag.name} variant="default">
+            {tag.name}
+          </Badge>
+        ))}
+      </div>
+    </>
+  );
+
+  if (!recipe?.id) {
+    return <div className={cardClassName}>{content}</div>;
+  }
 
   return (
-    <Stack
-      onClick={handleClick}
-      width={'min(47%,165px)'}
-      bg={'gray.600'}
-      boxShadow={'2xl'}
-      rounded={'md'}
-      overflow={'hidden'}
-      position={'relative'}
-      padding={2}
-      transition="all 0.5s"
-      cursor="pointer"
-      _hover={{
-        transform: 'scale(1.05)',
-      }}
-    >
-      <Text fontSize="md">{recipe.name}</Text>
-      <Image
-        h={'150px'}
-        w={'150px'}
-        src={recipe.image?.image?.publicUrlTransformed || ''}
-        objectFit={'cover'}
-        objectPosition={'top'}
-      />
-      <Flex gap={1}>
-        {recipe.tags?.map((tag) => {
-          return (
-            <Tag key={tag.name} size="sm" variant="outline" colorScheme="yellow">
-              <TagLabel>{tag.name}</TagLabel>
-            </Tag>
-          );
-        })}
-      </Flex>
-    </Stack>
+    <Link href={`/recipes/${recipe.id}`} className={cardClassName}>
+      {content}
+    </Link>
   );
 }
