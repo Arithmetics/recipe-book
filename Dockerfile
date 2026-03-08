@@ -1,5 +1,5 @@
 # --- Base Image (all other images are based off this one) ---------------------
-FROM node:22.12.0-alpine AS base
+FROM node:22.12.0-bookworm-slim AS base
 
 ARG DATABASE_URL
 ENV DATABASE_URL="$DATABASE_URL"
@@ -17,12 +17,10 @@ ENV CLOUDINARY_SECRET=$CLOUDINARY_SECRET
 # Set working directory.
 WORKDIR /var/service
 
-# Perform an upgrade to get all the latest security updates
-RUN apk upgrade --no-cache
-
-# Install OpenSSL 3.0 libraries for Prisma 5.22.0 on Alpine 3.21
-# Note: openssl is already included in base image, but we ensure libssl3 and libcrypto3 are present
-RUN apk add --no-cache libssl3 libcrypto3
+# Security updates + OpenSSL for Prisma
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends openssl ca-certificates \
+	&& rm -rf /var/lib/apt/lists/*
 
 # --- Setup Stage (image contains NPM credentials, should not be pushed) -------
 FROM base AS setup
