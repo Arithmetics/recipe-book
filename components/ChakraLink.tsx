@@ -1,3 +1,4 @@
+import { Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
 interface ChakraLinkProps {
@@ -5,13 +6,14 @@ interface ChakraLinkProps {
   href: string;
   children?: JSX.Element;
 }
-
 export default function ChakraLink({ href, title, children }: ChakraLinkProps): JSX.Element {
   return (
-    <NextLink href={href} passHref legacyBehavior>
-      <a href={href} className="text-main hover:underline">
-        {children ?? title}
-      </a>
+    <NextLink href={href} as={href}>
+      <Link _hover={undefined} color="teal.500">
+        {children ? children : title}
+      </Link>
     </NextLink>
   );
 }
+
+// https://github.com/chakra-ui/chakra-ui/issues/132

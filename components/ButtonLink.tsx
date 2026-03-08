@@ -1,33 +1,34 @@
+import { Link, Button, ThemingProps, LayoutProps } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { ReactElement } from 'react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 
 interface ButtonLinkProps {
   title: string;
   href: string;
-  buttonTheme?: { variant?: 'default' | 'neutral' | 'noShadow' | 'reverse' | 'ghost' };
-  layoutProps?: { w?: string };
+  buttonTheme: ThemingProps<'Button'>;
   leftIcon?: ReactElement;
+  layoutProps?: LayoutProps;
 }
-
 export default function ButtonLink({
   href,
   title,
-  buttonTheme = {},
+  buttonTheme,
   layoutProps,
   leftIcon,
 }: ButtonLinkProps): JSX.Element {
-  const variant =
-    buttonTheme.variant === 'ghost' || !buttonTheme.variant ? 'neutral' : buttonTheme.variant;
   return (
-    <NextLink href={href} passHref legacyBehavior>
-      <Button variant={variant} className={cn(layoutProps?.w === 'full' && 'w-full')} asChild>
-        <a href={href}>
-          {leftIcon}
+    <NextLink href={href} as={href}>
+      <Link _hover={undefined} href={href}>
+        <Button
+          variant={buttonTheme.variant}
+          colorScheme={buttonTheme.colorScheme}
+          leftIcon={leftIcon}
+          w={layoutProps?.w}
+        >
           {title}
-        </a>
-      </Button>
+        </Button>
+      </Link>
     </NextLink>
   );
 }
+// https://github.com/chakra-ui/chakra-ui/issues/132
