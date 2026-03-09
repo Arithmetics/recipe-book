@@ -72,10 +72,7 @@ export default function Recipe({ id }: RecipeProps): JSX.Element {
         </Collapsible>
       </header>
       <section className="rounded-base border-2 border-border p-8 shadow-shadow text-white">
-        <DocumentRenderer
-          document={recipe?.instructions?.document ?? []}
-          renderers={renderers}
-        />
+        <DocumentRenderer document={recipe?.instructions?.document ?? []} renderers={renderers} />
       </section>
     </div>
   );

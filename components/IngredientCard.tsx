@@ -10,11 +10,6 @@ export default function IngredientCard({ ingredient }: IngredientCardProps): JSX
   const name = ingredient.name ?? '';
 
   return (
-    <ImageCard
-      imageUrl={imageUrl}
-      caption={name}
-      imageAlt={name}
-      className="w-[120px] shrink-0"
-    />
+    <ImageCard imageUrl={imageUrl} caption={name} imageAlt={name} className="w-[120px] shrink-0" />
   );
 }

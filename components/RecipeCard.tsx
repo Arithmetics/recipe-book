@@ -36,9 +36,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
 
   return (
     <Link href={`/recipes/${recipe.id}`} passHref legacyBehavior>
-      <a className={linkClassName}>
-        {card}
-      </a>
+      <a className={linkClassName}>{card}</a>
     </Link>
   );
 }
