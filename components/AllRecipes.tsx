@@ -38,7 +38,7 @@ export default function AllRecipes(): JSX.Element {
       <div className="mx-4 flex max-w-[800px] items-center gap-10">
         <Input placeholder="Search" value={searchTerm} onChange={handleSearch} />
       </div>
-      <div className="mx-4 mt-4 flex flex-wrap gap-4">
+      <div className="mx-4 mt-4 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
         {nonFilteredRecipes?.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe as Recipe} />
         ))}

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import Recipe from '../../components/Recipe';
 
 type RecipePageProps = {
@@ -5,5 +6,7 @@ type RecipePageProps = {
 };
 
 export default function RecipePage({ query }: RecipePageProps): JSX.Element {
-  return <Recipe id={query?.id} />;
+  const router = useRouter();
+  const id = (router.query?.id ?? query?.id) as string | undefined;
+  return <Recipe id={id} />;
 }

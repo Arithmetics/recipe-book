@@ -1,40 +1,44 @@
 import Link from 'next/link';
 import { Recipe } from '../generated/graphql-types';
+import { ImageCard } from '@/components/ui/image-card';
 import { Badge } from '@/components/ui/badge';
 
 type RecipeCardProps = {
   recipe: Recipe;
 };
 
-const cardClassName =
-  'relative block w-[min(47%,165px)] cursor-pointer overflow-hidden rounded-base border-2 border-border bg-card p-2 shadow-shadow transition-all duration-300 hover:scale-105';
+const linkClassName =
+  'group flex h-full flex-col cursor-pointer transition-all duration-300 hover:scale-[1.02]';
 
 export default function RecipeCard({ recipe }: RecipeCardProps): JSX.Element {
-  const content = (
-    <>
-      <p className="text-sm font-base">{recipe.name}</p>
-      <img
-        src={recipe.image?.image?.publicUrlTransformed || ''}
-        alt=""
-        className="h-[150px] w-[150px] object-cover object-top"
-      />
-      <div className="mt-1 flex flex-wrap gap-1">
-        {recipe.tags?.map((tag) => (
-          <Badge key={tag.name} variant="default">
-            {tag.name}
-          </Badge>
-        ))}
-      </div>
-    </>
+  const imageUrl = recipe.image?.image?.publicUrlTransformed ?? '';
+  const caption = recipe.name ?? '';
+  const tags = recipe.tags?.map((tag) => (
+    <Badge key={tag.name} variant="default" className="text-xs">
+      {tag.name}
+    </Badge>
+  ));
+
+  const card = (
+    <ImageCard
+      imageUrl={imageUrl}
+      caption={caption}
+      imageAlt={caption}
+      className="flex-1 min-h-0 transition-colors group-hover:border-main"
+    >
+      {tags}
+    </ImageCard>
   );
 
   if (!recipe?.id) {
-    return <div className={cardClassName}>{content}</div>;
+    return <div className={linkClassName}>{card}</div>;
   }
 
   return (
-    <Link href={`/recipes/${recipe.id}`} className={cardClassName}>
-      {content}
+    <Link href={`/recipes/${recipe.id}`} passHref legacyBehavior>
+      <a className={linkClassName}>
+        {card}
+      </a>
     </Link>
   );
 }
