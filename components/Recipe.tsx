@@ -29,7 +29,7 @@ export default function Recipe({ id }: RecipeProps): JSX.Element {
   }
 
   return (
-    <div className="mx-auto max-w-[2000px] px-4 pb-24 flex flex-col gap-10">
+    <div className="mx-auto max-w-[2000px] px-4 pt-6 pb-24 flex flex-col gap-4">
       <header className="flex flex-col gap-4">
         <div className="flex items-center gap-2">
           <h1 className="text-5xl font-bold">{recipe?.name}</h1>

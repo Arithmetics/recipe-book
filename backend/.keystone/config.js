@@ -262,6 +262,8 @@ var frontendUrl = process.env.FRONTEND_URL;
 if (!frontendUrl) {
   throw new Error(`Where's your FRONTEND_URL dude`);
 }
+var dbUrl = process.env.DATABASE_URL ?? "";
+var dbUrlWithParams = dbUrl.includes("?") ? `${dbUrl}&pool_timeout=0&connection_limit=10` : `${dbUrl}?pool_timeout=0&connection_limit=10`;
 var keystone_default = auth.withAuth(
   (0, import_core2.config)({
     server: {
@@ -272,7 +274,8 @@ var keystone_default = auth.withAuth(
     },
     db: {
       provider: "postgresql",
-      url: `${process.env.DATABASE_URL}?pool_timeout=0`,
+      // Cap connection pool to avoid "too many clients" (recipes page triggers counts for related lists)
+      url: dbUrlWithParams,
       enableLogging: true,
       idField: { kind: "uuid" }
     },

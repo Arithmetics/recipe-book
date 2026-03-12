@@ -29,7 +29,9 @@ export function ImageCard({
       <p className="truncate px-2 pt-2 text-sm font-medium" title={caption}>
         {caption}
       </p>
-      <div className="flex min-h-[2rem] flex-wrap items-end gap-1 p-2 pt-0">{children}</div>
+      {children != null && React.Children.count(children) > 0 ? (
+        <div className="flex min-h-[2rem] flex-wrap items-end gap-1 p-2 pt-0">{children}</div>
+      ) : null}
     </div>
   );
 }

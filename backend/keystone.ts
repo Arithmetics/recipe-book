@@ -33,6 +33,12 @@ if (!frontendUrl) {
   throw new Error(`Where's your FRONTEND_URL dude`);
 }
 
+// Append DB params without clobbering existing query string (e.g. ?sslmode=require)
+const dbUrl = process.env.DATABASE_URL ?? '';
+const dbUrlWithParams = dbUrl.includes('?')
+  ? `${dbUrl}&pool_timeout=0&connection_limit=10`
+  : `${dbUrl}?pool_timeout=0&connection_limit=10`;
+
 export default auth.withAuth(
   config({
     server: {
@@ -43,7 +49,8 @@ export default auth.withAuth(
     },
     db: {
       provider: 'postgresql',
-      url: `${process.env.DATABASE_URL}?pool_timeout=0`,
+      // Cap connection pool to avoid "too many clients" (recipes page triggers counts for related lists)
+      url: dbUrlWithParams,
       enableLogging: true,
       idField: { kind: 'uuid' },
     },
