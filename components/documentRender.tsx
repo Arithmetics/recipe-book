@@ -1,32 +1,50 @@
 import React from 'react';
 import { DocumentRendererProps } from '@keystone-6/document-renderer';
+import { Text, UnorderedList, ListItem, OrderedList } from '@chakra-ui/react';
 
 export const renderers: DocumentRendererProps['renderers'] = {
+  // use your editor's autocomplete to see what other renderers you can override
   block: {
-    paragraph: ({ children, textAlign }) => (
-      <p
-        className="mb-4 text-base last:mb-0"
-        style={{ textAlign: textAlign as 'left' | 'right' | 'center' | 'justify' | undefined }}
-      >
-        {children}
-      </p>
-    ),
-    heading: ({ children, textAlign }) => (
-      <h2
-        className="mt-8 mb-3 text-3xl font-bold first:mt-0"
-        style={{ textAlign: textAlign as 'left' | 'right' | 'center' | 'justify' | undefined }}
-      >
-        {children}
-      </h2>
-    ),
-    list: ({ children, type }) => {
-      const ListTag = type === 'ordered' ? 'ol' : 'ul';
+    paragraph: ({ children, textAlign }) => {
       return (
-        <ListTag className="mb-4 list-inside list-disc space-y-1.5 last:mb-0">
+        <Text
+          fontSize="md"
+          style={{ textAlign: textAlign as 'left' | 'right' | 'center' | 'justify' | undefined }}
+        >
+          {children}
+        </Text>
+      );
+    },
+    heading: ({ children, textAlign }) => {
+      return (
+        <Text
+          fontSize="3xl"
+          style={{ textAlign: textAlign as 'left' | 'right' | 'center' | 'justify' | undefined }}
+        >
+          {children}
+        </Text>
+      );
+    },
+    list: ({ children, type }) => {
+      if (type === 'ordered') {
+        return (
+          <OrderedList>
+            {children.map((c, index) => (
+              <ListItem color={'yellow.500'} key={c.key ?? index}>
+                {c}
+              </ListItem>
+            ))}
+          </OrderedList>
+        );
+      }
+      return (
+        <UnorderedList>
           {children.map((c, index) => (
-            <li key={c.key ?? index}>{c}</li>
+            <ListItem color={'yellow.500'} key={c.key ?? index}>
+              {c}
+            </ListItem>
           ))}
-        </ListTag>
+        </UnorderedList>
       );
     },
   },
