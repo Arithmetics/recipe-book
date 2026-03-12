@@ -1,19 +1,25 @@
 import NextApp, { AppInitialProps } from 'next/app';
-import { ChakraProvider } from '@chakra-ui/react';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import { ApolloProvider } from '@apollo/client';
+import { Toaster } from 'sonner';
 
+import '../styles/globals.css';
 import '../components/nprogress.css';
 
 import Page from '../components/Page';
-import theme from '../theme';
 import withData from '../lib/withData';
 import { ParsedUrlQuery } from 'node:querystring';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
+Router.events.on('routeChangeError', (err) => {
+  NProgress.done();
+  // "Cancel rendering route" can occur in prod when navigation races; avoid surfacing to user
+  if (err?.message !== 'Cancel rendering route') {
+    console.error('Route change error:', err);
+  }
+});
 
 class App extends NextApp {
   render(): JSX.Element {
@@ -22,11 +28,10 @@ class App extends NextApp {
     const { Component, pageProps, apollo } = this.props;
     return (
       <ApolloProvider client={apollo}>
-        <ChakraProvider theme={theme}>
-          <Page>
-            <Component {...pageProps} />
-          </Page>
-        </ChakraProvider>
+        <Page>
+          <Component {...pageProps} />
+        </Page>
+        <Toaster richColors position="top-right" />
       </ApolloProvider>
     );
   }
